@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="3" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f2937"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="700" fill="#f8fafc"/>
+  <text x="600" y="38" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">Taints &amp; Tolerations</text>
+  <text x="600" y="60" text-anchor="middle" font-size="13" fill="#475569">Taints REPEL pods from nodes &#8226; Tolerations let specific pods overcome that</text>
+
+  <text x="600" y="100" text-anchor="middle" font-size="14" fill="#475569" font-style="italic">"This node is for GPU workloads only" &#8212; said with taints, accepted with tolerations</text>
+
+  <!-- Taint anatomy -->
+  <g filter="url(#sh)">
+    <rect x="60" y="130" width="540" height="180" rx="14" fill="#fee2e2" stroke="#7f1d1d" stroke-width="2"/>
+  </g>
+  <text x="330" y="155" text-anchor="middle" font-size="16" font-weight="700" fill="#7f1d1d">A Taint (set on a Node)</text>
+  <text x="80" y="180" font-size="12" font-family="Consolas, monospace" fill="#0f172a">key=value:effect</text>
+  <text x="80" y="205" font-size="11" fill="#0f172a"><tspan font-weight="700">Three effects:</tspan></text>
+  <text x="100" y="225" font-size="11" fill="#0f172a">&#8226; <tspan font-family="Consolas, monospace" font-weight="700">NoSchedule</tspan> &#8212; new pods cannot be scheduled here unless they tolerate</text>
+  <text x="100" y="244" font-size="11" fill="#0f172a">&#8226; <tspan font-family="Consolas, monospace" font-weight="700">PreferNoSchedule</tspan> &#8212; scheduler tries hard to avoid this node</text>
+  <text x="100" y="263" font-size="11" fill="#0f172a">&#8226; <tspan font-family="Consolas, monospace" font-weight="700">NoExecute</tspan> &#8212; existing pods without toleration are EVICTED</text>
+  <text x="80" y="293" font-size="11" font-family="Consolas, monospace" fill="#7f1d1d">kubectl taint nodes node-1 gpu=true:NoSchedule</text>
+
+  <!-- Toleration anatomy -->
+  <g filter="url(#sh)">
+    <rect x="620" y="130" width="540" height="180" rx="14" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+  </g>
+  <text x="890" y="155" text-anchor="middle" font-size="16" font-weight="700" fill="#14532d">A Toleration (set on a Pod)</text>
+  <text x="640" y="180" font-size="11" font-family="Consolas, monospace" fill="#0f172a">spec.tolerations:</text>
+  <text x="655" y="195" font-size="11" font-family="Consolas, monospace" fill="#0f172a">- key: gpu</text>
+  <text x="655" y="210" font-size="11" font-family="Consolas, monospace" fill="#0f172a">  operator: Equal</text>
+  <text x="655" y="225" font-size="11" font-family="Consolas, monospace" fill="#0f172a">  value: "true"</text>
+  <text x="655" y="240" font-size="11" font-family="Consolas, monospace" fill="#0f172a">  effect: NoSchedule</text>
+  <text x="640" y="265" font-size="11" fill="#0f172a"><tspan font-weight="700">Operators:</tspan> Equal (default), Exists (key only)</text>
+  <text x="640" y="285" font-size="11" fill="#0f172a"><tspan font-weight="700">tolerationSeconds</tspan>: how long to tolerate NoExecute before being evicted</text>
+
+  <!-- Matrix: 4 nodes x 3 pods -->
+  <text x="600" y="350" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">Putting them together</text>
+
+  <!-- Nodes row -->
+  <text x="350" y="380" text-anchor="middle" font-size="13" font-weight="700" fill="#475569">Node A (no taint)</text>
+  <text x="600" y="380" text-anchor="middle" font-size="13" font-weight="700" fill="#475569">Node B (gpu=true:NoSchedule)</text>
+  <text x="900" y="380" text-anchor="middle" font-size="13" font-weight="700" fill="#475569">Node C (special:NoExecute)</text>
+
+  <g filter="url(#sh)"><rect x="240" y="395" width="220" height="80" rx="10" fill="#16a34a" stroke="#14532d" stroke-width="2"/></g>
+  <text x="350" y="420" text-anchor="middle" font-size="11" fill="white">Accepts all pods</text>
+  <text x="350" y="438" text-anchor="middle" font-size="10" fill="#dcfce7" font-style="italic">no taints to satisfy</text>
+
+  <g filter="url(#sh)"><rect x="490" y="395" width="220" height="80" rx="10" fill="#dc2626" stroke="#7f1d1d" stroke-width="2"/></g>
+  <text x="600" y="420" text-anchor="middle" font-size="11" fill="white">Rejects pods without</text>
+  <text x="600" y="438" text-anchor="middle" font-size="11" fill="white">matching toleration</text>
+  <text x="600" y="458" text-anchor="middle" font-size="9" fill="#fee2e2" font-style="italic">but does NOT evict existing</text>
+
+  <g filter="url(#sh)"><rect x="790" y="395" width="220" height="80" rx="10" fill="#7f1d1d" stroke="#3f0808" stroke-width="2"/></g>
+  <text x="900" y="420" text-anchor="middle" font-size="11" fill="white">Rejects pods AND evicts</text>
+  <text x="900" y="438" text-anchor="middle" font-size="11" fill="white">existing pods that don't tolerate</text>
+
+  <!-- Pods row -->
+  <text x="100" y="510" font-size="13" font-weight="700" fill="#0f172a">Pod X &#8212; no tolerations</text>
+  <g><rect x="240" y="500" width="220" height="40" rx="6" fill="#dcfce7" stroke="#15803d"/><text x="350" y="525" text-anchor="middle" font-size="11" font-weight="700" fill="#14532d">runs on A</text></g>
+  <g><rect x="490" y="500" width="220" height="40" rx="6" fill="#fee2e2" stroke="#7f1d1d"/><text x="600" y="525" text-anchor="middle" font-size="11" font-weight="700" fill="#7f1d1d">repelled (Pending)</text></g>
+  <g><rect x="790" y="500" width="220" height="40" rx="6" fill="#fee2e2" stroke="#7f1d1d"/><text x="900" y="525" text-anchor="middle" font-size="11" font-weight="700" fill="#7f1d1d">repelled / evicted</text></g>
+
+  <text x="100" y="565" font-size="13" font-weight="700" fill="#0f172a">Pod Y &#8212; tolerates gpu=true</text>
+  <g><rect x="240" y="555" width="220" height="40" rx="6" fill="#dcfce7" stroke="#15803d"/><text x="350" y="580" text-anchor="middle" font-size="11" font-weight="700" fill="#14532d">can run on A</text></g>
+  <g><rect x="490" y="555" width="220" height="40" rx="6" fill="#dcfce7" stroke="#15803d"/><text x="600" y="580" text-anchor="middle" font-size="11" font-weight="700" fill="#14532d">can run on B</text></g>
+  <g><rect x="790" y="555" width="220" height="40" rx="6" fill="#fee2e2" stroke="#7f1d1d"/><text x="900" y="580" text-anchor="middle" font-size="11" font-weight="700" fill="#7f1d1d">repelled / evicted</text></g>
+
+  <text x="100" y="620" font-size="13" font-weight="700" fill="#0f172a">Pod Z &#8212; tolerates BOTH</text>
+  <g><rect x="240" y="610" width="220" height="40" rx="6" fill="#dcfce7" stroke="#15803d"/><text x="350" y="635" text-anchor="middle" font-size="11" font-weight="700" fill="#14532d">can run on A</text></g>
+  <g><rect x="490" y="610" width="220" height="40" rx="6" fill="#dcfce7" stroke="#15803d"/><text x="600" y="635" text-anchor="middle" font-size="11" font-weight="700" fill="#14532d">can run on B</text></g>
+  <g><rect x="790" y="610" width="220" height="40" rx="6" fill="#dcfce7" stroke="#15803d"/><text x="900" y="635" text-anchor="middle" font-size="11" font-weight="700" fill="#14532d">can run on C</text></g>
+
+  <text x="600" y="685" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Tolerations let pods land on tainted nodes &#8212; they do NOT prefer or pull pods toward those nodes.</text>
+</svg>

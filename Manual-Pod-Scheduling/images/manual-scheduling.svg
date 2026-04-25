@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="3" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f2937"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="600" fill="#f8fafc"/>
+  <text x="600" y="38" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">Manual Pod Scheduling</text>
+  <text x="600" y="60" text-anchor="middle" font-size="13" fill="#475569">Bypass the scheduler by setting spec.nodeName yourself</text>
+
+  <!-- Normal flow -->
+  <g filter="url(#sh)"><rect x="60" y="100" width="540" height="200" rx="12" fill="#dcfce7" stroke="#15803d" stroke-width="2"/></g>
+  <text x="330" y="125" text-anchor="middle" font-size="16" font-weight="700" fill="#14532d">Normal flow (with scheduler)</text>
+
+  <g filter="url(#sh)"><rect x="80" y="150" width="100" height="60" rx="8" fill="#8b5cf6"/><text x="130" y="175" text-anchor="middle" font-size="11" font-weight="700" fill="white">User</text><text x="130" y="195" text-anchor="middle" font-size="9" fill="#ede9fe">kubectl apply</text></g>
+  <line x1="180" y1="180" x2="218" y2="180" stroke="#1f2937" stroke-width="2" marker-end="url(#ar)"/>
+  <g filter="url(#sh)"><rect x="220" y="150" width="100" height="60" rx="8" fill="#2563eb"/><text x="270" y="175" text-anchor="middle" font-size="11" font-weight="700" fill="white">API Server</text><text x="270" y="193" text-anchor="middle" font-size="9" fill="#dbeafe">spec.nodeName=""</text></g>
+  <line x1="320" y1="180" x2="358" y2="180" stroke="#1f2937" stroke-width="2" marker-end="url(#ar)"/>
+  <g filter="url(#sh)"><rect x="360" y="150" width="100" height="60" rx="8" fill="#0d9488"/><text x="410" y="175" text-anchor="middle" font-size="11" font-weight="700" fill="white">Scheduler</text><text x="410" y="193" text-anchor="middle" font-size="9" fill="#ccfbf1">picks a node</text></g>
+  <line x1="460" y1="180" x2="498" y2="180" stroke="#1f2937" stroke-width="2" marker-end="url(#ar)"/>
+  <g filter="url(#sh)"><rect x="500" y="150" width="100" height="60" rx="8" fill="#16a34a"/><text x="550" y="175" text-anchor="middle" font-size="11" font-weight="700" fill="white">Kubelet</text><text x="550" y="193" text-anchor="middle" font-size="9" fill="#dcfce7">runs the pod</text></g>
+
+  <text x="330" y="240" text-anchor="middle" font-size="11" fill="#0f172a">User leaves <tspan font-family="Consolas, monospace">spec.nodeName</tspan> empty -&gt; scheduler fills it.</text>
+  <text x="330" y="260" text-anchor="middle" font-size="11" fill="#0f172a">Kubelet on the chosen node sees the pod assigned to it via watch.</text>
+  <text x="330" y="282" text-anchor="middle" font-size="11" font-weight="700" fill="#14532d">Recommended for almost every workload.</text>
+
+  <!-- Manual flow -->
+  <g filter="url(#sh)"><rect x="620" y="100" width="540" height="200" rx="12" fill="#fee2e2" stroke="#7f1d1d" stroke-width="2"/></g>
+  <text x="890" y="125" text-anchor="middle" font-size="16" font-weight="700" fill="#7f1d1d">Manual scheduling (no scheduler)</text>
+
+  <g filter="url(#sh)"><rect x="640" y="150" width="100" height="60" rx="8" fill="#8b5cf6"/><text x="690" y="175" text-anchor="middle" font-size="11" font-weight="700" fill="white">User</text><text x="690" y="195" text-anchor="middle" font-size="9" fill="#ede9fe">kubectl apply</text></g>
+  <line x1="740" y1="180" x2="778" y2="180" stroke="#1f2937" stroke-width="2" marker-end="url(#ar)"/>
+  <g filter="url(#sh)"><rect x="780" y="150" width="120" height="60" rx="8" fill="#2563eb"/><text x="840" y="175" text-anchor="middle" font-size="11" font-weight="700" fill="white">API Server</text><text x="840" y="193" text-anchor="middle" font-size="9" fill="#dbeafe">spec.nodeName=node-2</text></g>
+  <line x1="900" y1="180" x2="940" y2="180" stroke="#7f1d1d" stroke-width="2" stroke-dasharray="4,3"/>
+  <text x="970" y="170" font-size="10" fill="#7f1d1d" font-style="italic" font-weight="700">SCHEDULER</text>
+  <text x="970" y="184" font-size="10" fill="#7f1d1d" font-style="italic" font-weight="700">SKIPPED</text>
+  <line x1="1018" y1="180" x2="1058" y2="180" stroke="#1f2937" stroke-width="2" marker-end="url(#ar)"/>
+  <g filter="url(#sh)"><rect x="1060" y="150" width="100" height="60" rx="8" fill="#16a34a"/><text x="1110" y="175" text-anchor="middle" font-size="11" font-weight="700" fill="white">Kubelet</text><text x="1110" y="193" text-anchor="middle" font-size="9" fill="#dcfce7">on node-2</text></g>
+
+  <text x="890" y="240" text-anchor="middle" font-size="11" fill="#0f172a">User sets <tspan font-family="Consolas, monospace">spec.nodeName=node-2</tspan> directly.</text>
+  <text x="890" y="260" text-anchor="middle" font-size="11" fill="#0f172a">Pod object lands in etcd already &quot;assigned.&quot; Scheduler ignores it.</text>
+  <text x="890" y="282" text-anchor="middle" font-size="11" font-weight="700" fill="#7f1d1d">Use only for niche cases (debugging, dedicated infra).</text>
+
+  <!-- Pitfalls -->
+  <rect x="60" y="340" width="1100" height="240" rx="14" fill="#fef3c7" stroke="#854d0e" stroke-width="2"/>
+  <text x="80" y="370" font-size="15" font-weight="700" fill="#713f12">What you LOSE when you skip the scheduler</text>
+  <text x="80" y="395" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">No fitness check.</tspan> The scheduler verifies CPU/memory fits and node is Ready. Manual scheduling does NOT.</text>
+  <text x="80" y="415" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">No taint/toleration evaluation.</tspan> A NoSchedule taint will be ignored. The pod is forced onto the node.</text>
+  <text x="80" y="435" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">No affinity / nodeSelector enforcement.</tspan> Any constraints in your pod spec are bypassed.</text>
+  <text x="80" y="455" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">If the node does not exist or is unreachable</tspan>, the pod sits in <tspan font-family="Consolas, monospace">Pending</tspan> with reason &quot;node not found.&quot;</text>
+  <text x="80" y="475" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">If the node lacks resources</tspan>, the pod will be created but kubelet may evict it later (OOM, etc.).</text>
+
+  <text x="80" y="510" font-size="13" font-weight="700" fill="#713f12">When manual scheduling IS appropriate</text>
+  <text x="80" y="535" font-size="11" fill="#0f172a">1. The scheduler is broken/unavailable and you need to bring up a control-plane component (e.g., during a disaster).</text>
+  <text x="80" y="555" font-size="11" fill="#0f172a">2. You are running a custom control loop and want full deterministic placement (rarely needed).</text>
+  <text x="80" y="572" font-size="11" fill="#0f172a">For everyday targeting use <tspan font-weight="700">nodeSelector</tspan>, <tspan font-weight="700">nodeAffinity</tspan>, or <tspan font-weight="700">taints/tolerations</tspan> instead &#8212; see other folders.</text>
+</svg>

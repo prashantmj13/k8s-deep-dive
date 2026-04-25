@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="3" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="700" fill="#f8fafc"/>
+  <text x="600" y="38" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">Node Affinity &#8212; Rich Placement Rules</text>
+  <text x="600" y="60" text-anchor="middle" font-size="13" fill="#475569">Two strengths (Required, Preferred) &#215; Two operators (In/NotIn/Exists/...)</text>
+
+  <!-- Hard rule -->
+  <g filter="url(#sh)">
+    <rect x="60" y="100" width="540" height="280" rx="14" fill="#fee2e2" stroke="#7f1d1d" stroke-width="2"/>
+  </g>
+  <text x="330" y="125" text-anchor="middle" font-size="16" font-weight="700" fill="#7f1d1d">Required (hard)</text>
+  <text x="330" y="146" text-anchor="middle" font-size="11" fill="#0f172a" font-style="italic">requiredDuringSchedulingIgnoredDuringExecution</text>
+
+  <text x="80" y="180" font-size="11" font-family="Consolas, monospace" fill="#0f172a">affinity:</text>
+  <text x="95" y="195" font-size="11" font-family="Consolas, monospace" fill="#0f172a">nodeAffinity:</text>
+  <text x="110" y="210" font-size="11" font-family="Consolas, monospace" fill="#0f172a">requiredDuringSchedulingIgnoredDuringExecution:</text>
+  <text x="125" y="225" font-size="11" font-family="Consolas, monospace" fill="#0f172a">nodeSelectorTerms:</text>
+  <text x="140" y="240" font-size="11" font-family="Consolas, monospace" fill="#0f172a">- matchExpressions:</text>
+  <text x="155" y="255" font-size="11" font-family="Consolas, monospace" fill="#0f172a">- key: zone</text>
+  <text x="155" y="270" font-size="11" font-family="Consolas, monospace" fill="#0f172a">  operator: In</text>
+  <text x="155" y="285" font-size="11" font-family="Consolas, monospace" fill="#0f172a">  values: [us-east-1a, us-east-1b]</text>
+
+  <text x="80" y="320" font-size="11" fill="#0f172a">&#8226; Pod stays Pending if no node matches.</text>
+  <text x="80" y="338" font-size="11" fill="#0f172a">&#8226; Equivalent to nodeSelector with set-based ops.</text>
+  <text x="80" y="356" font-size="11" fill="#0f172a">&#8226; Multiple nodeSelectorTerms = OR; matchExpressions inside one = AND.</text>
+
+  <!-- Soft rule -->
+  <g filter="url(#sh)">
+    <rect x="620" y="100" width="540" height="280" rx="14" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+  </g>
+  <text x="890" y="125" text-anchor="middle" font-size="16" font-weight="700" fill="#14532d">Preferred (soft)</text>
+  <text x="890" y="146" text-anchor="middle" font-size="11" fill="#0f172a" font-style="italic">preferredDuringSchedulingIgnoredDuringExecution</text>
+
+  <text x="640" y="180" font-size="11" font-family="Consolas, monospace" fill="#0f172a">affinity:</text>
+  <text x="655" y="195" font-size="11" font-family="Consolas, monospace" fill="#0f172a">nodeAffinity:</text>
+  <text x="670" y="210" font-size="11" font-family="Consolas, monospace" fill="#0f172a">preferredDuringSchedulingIgnoredDuringExecution:</text>
+  <text x="685" y="225" font-size="11" font-family="Consolas, monospace" fill="#0f172a">- weight: 80</text>
+  <text x="700" y="240" font-size="11" font-family="Consolas, monospace" fill="#0f172a">preference:</text>
+  <text x="715" y="255" font-size="11" font-family="Consolas, monospace" fill="#0f172a">matchExpressions:</text>
+  <text x="730" y="270" font-size="11" font-family="Consolas, monospace" fill="#0f172a">- key: disktype</text>
+  <text x="730" y="285" font-size="11" font-family="Consolas, monospace" fill="#0f172a">  operator: In, values: [ssd]</text>
+
+  <text x="640" y="320" font-size="11" fill="#0f172a">&#8226; Scheduler tries hard but allows other nodes if needed.</text>
+  <text x="640" y="338" font-size="11" fill="#0f172a">&#8226; Each rule has weight 1-100; final score = sum of matches.</text>
+  <text x="640" y="356" font-size="11" fill="#0f172a">&#8226; Best for "I&apos;d like this, but don&apos;t Pending if not."</text>
+
+  <!-- Operators table -->
+  <text x="600" y="430" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">matchExpressions operators</text>
+
+  <rect x="60" y="450" width="1080" height="40" fill="#1e293b"/>
+  <text x="80" y="475" font-size="12" font-weight="700" fill="white">Operator</text>
+  <text x="380" y="475" font-size="12" font-weight="700" fill="white">Meaning</text>
+  <text x="780" y="475" font-size="12" font-weight="700" fill="white">Example</text>
+
+  <g font-size="11" fill="#0f172a">
+    <rect x="60" y="490" width="1080" height="32" fill="#f1f5f9"/>
+    <text x="80" y="510" font-family="Consolas, monospace" font-weight="700">In</text>
+    <text x="380" y="510">value is one of the listed values</text>
+    <text x="780" y="510" font-family="Consolas, monospace">key: zone, operator: In, values: [a,b]</text>
+
+    <rect x="60" y="522" width="1080" height="32" fill="#ffffff"/>
+    <text x="80" y="542" font-family="Consolas, monospace" font-weight="700">NotIn</text>
+    <text x="380" y="542">value is NOT one of the listed values</text>
+    <text x="780" y="542" font-family="Consolas, monospace">key: env, operator: NotIn, values: [dev]</text>
+
+    <rect x="60" y="554" width="1080" height="32" fill="#f1f5f9"/>
+    <text x="80" y="574" font-family="Consolas, monospace" font-weight="700">Exists</text>
+    <text x="380" y="574">label key exists (any value)</text>
+    <text x="780" y="574" font-family="Consolas, monospace">key: gpu, operator: Exists</text>
+
+    <rect x="60" y="586" width="1080" height="32" fill="#ffffff"/>
+    <text x="80" y="606" font-family="Consolas, monospace" font-weight="700">DoesNotExist</text>
+    <text x="380" y="606">label key is missing</text>
+    <text x="780" y="606" font-family="Consolas, monospace">key: deprecated, operator: DoesNotExist</text>
+
+    <rect x="60" y="618" width="1080" height="32" fill="#f1f5f9"/>
+    <text x="80" y="638" font-family="Consolas, monospace" font-weight="700">Gt</text>
+    <text x="380" y="638">numeric: value &gt; X</text>
+    <text x="780" y="638" font-family="Consolas, monospace">key: cpu-cores, operator: Gt, values: ["8"]</text>
+
+    <rect x="60" y="650" width="1080" height="32" fill="#ffffff"/>
+    <text x="80" y="670" font-family="Consolas, monospace" font-weight="700">Lt</text>
+    <text x="380" y="670">numeric: value &lt; X</text>
+    <text x="780" y="670" font-family="Consolas, monospace">key: kernel-version, operator: Lt, values: ["6"]</text>
+  </g>
+</svg>

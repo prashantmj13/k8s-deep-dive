@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="3" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f2937"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="700" fill="#f8fafc"/>
+  <text x="600" y="38" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">Anatomy of a Deployment</text>
+  <text x="600" y="60" text-anchor="middle" font-size="13" fill="#475569">Deployment owns ReplicaSets &#8226; ReplicaSets own Pods &#8226; A new RS per template change</text>
+
+  <!-- Deployment object -->
+  <g filter="url(#sh)">
+    <rect x="80" y="100" width="380" height="540" rx="14" fill="#fee2e2" stroke="#7f1d1d" stroke-width="2.5"/>
+    <text x="100" y="130" font-size="16" font-weight="700" fill="#7f1d1d">Deployment "web"</text>
+    <text x="100" y="148" font-size="11" fill="#475569">apiVersion: apps/v1</text>
+
+    <rect x="100" y="170" width="340" height="80" rx="8" fill="#dc2626"/>
+    <text x="120" y="195" font-size="13" font-weight="700" fill="white">spec.replicas</text>
+    <text x="120" y="215" font-size="14" font-weight="700" fill="white" font-family="Consolas, monospace">3</text>
+    <text x="120" y="232" font-size="10" fill="#fee2e2">target replica count</text>
+    <text x="120" y="246" font-size="10" fill="#fee2e2" font-style="italic">enforced via the ACTIVE RS</text>
+
+    <rect x="100" y="265" width="340" height="100" rx="8" fill="#7c3aed"/>
+    <text x="120" y="290" font-size="13" font-weight="700" fill="white">spec.strategy</text>
+    <text x="120" y="310" font-size="11" fill="#ede9fe" font-family="Consolas, monospace">type: RollingUpdate</text>
+    <text x="120" y="328" font-size="11" fill="#ede9fe" font-family="Consolas, monospace">maxSurge: 25%</text>
+    <text x="120" y="345" font-size="11" fill="#ede9fe" font-family="Consolas, monospace">maxUnavailable: 25%</text>
+    <text x="120" y="360" font-size="9" fill="#ede9fe" font-style="italic">also: Recreate</text>
+
+    <rect x="100" y="380" width="340" height="80" rx="8" fill="#0d9488"/>
+    <text x="120" y="405" font-size="13" font-weight="700" fill="white">spec.selector</text>
+    <text x="120" y="425" font-size="11" fill="#ccfbf1" font-family="Consolas, monospace">matchLabels:</text>
+    <text x="135" y="442" font-size="11" fill="#ccfbf1" font-family="Consolas, monospace">app: web</text>
+    <text x="120" y="455" font-size="9" fill="#ccfbf1" font-style="italic">immutable, like in RS</text>
+
+    <rect x="100" y="475" width="340" height="150" rx="8" fill="#16a34a"/>
+    <text x="120" y="500" font-size="13" font-weight="700" fill="white">spec.template</text>
+    <text x="120" y="520" font-size="11" fill="#dcfce7" font-family="Consolas, monospace">metadata.labels:</text>
+    <text x="135" y="536" font-size="11" fill="#dcfce7" font-family="Consolas, monospace">app: web</text>
+    <text x="120" y="555" font-size="11" fill="#dcfce7" font-family="Consolas, monospace">spec.containers:</text>
+    <text x="135" y="570" font-size="11" fill="#dcfce7" font-family="Consolas, monospace">- image: nginx:1.27</text>
+    <text x="120" y="595" font-size="9" fill="#dcfce7" font-style="italic">CHANGING this triggers a rollout</text>
+    <text x="120" y="610" font-size="9" fill="#dcfce7" font-style="italic">(creates a new ReplicaSet)</text>
+  </g>
+
+  <line x1="465" y1="370" x2="565" y2="370" stroke="#1f2937" stroke-width="3" marker-end="url(#ar)"/>
+  <text x="515" y="358" text-anchor="middle" font-size="11" fill="#0f172a" font-style="italic">owns</text>
+
+  <!-- ReplicaSets stack -->
+  <text x="900" y="125" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a">ReplicaSets (one per revision)</text>
+
+  <!-- New RS (active) -->
+  <g filter="url(#sh)">
+    <rect x="600" y="145" width="540" height="120" rx="10" fill="#dcfce7" stroke="#15803d" stroke-width="2.5"/>
+    <text x="620" y="170" font-size="13" font-weight="700" fill="#14532d">RS "web-7c5d4f9"  (revision 3, ACTIVE)</text>
+    <text x="620" y="190" font-size="11" fill="#0f172a">replicas: 3 &#8226; image: nginx:1.27</text>
+    <text x="620" y="208" font-size="10" fill="#475569" font-style="italic">selector: app=web, pod-template-hash=7c5d4f9</text>
+
+    <g><rect x="620" y="220" width="50" height="35" rx="5" fill="#16a34a"/><text x="645" y="242" text-anchor="middle" font-size="10" font-weight="700" fill="white">P1</text></g>
+    <g><rect x="680" y="220" width="50" height="35" rx="5" fill="#16a34a"/><text x="705" y="242" text-anchor="middle" font-size="10" font-weight="700" fill="white">P2</text></g>
+    <g><rect x="740" y="220" width="50" height="35" rx="5" fill="#16a34a"/><text x="765" y="242" text-anchor="middle" font-size="10" font-weight="700" fill="white">P3</text></g>
+  </g>
+
+  <!-- Old RS (kept for rollback) -->
+  <g filter="url(#sh)">
+    <rect x="600" y="290" width="540" height="100" rx="10" fill="#fef3c7" stroke="#854d0e" stroke-width="2"/>
+    <text x="620" y="313" font-size="13" font-weight="700" fill="#713f12">RS "web-3a8b2c1"  (revision 2, scaled to 0)</text>
+    <text x="620" y="332" font-size="11" fill="#0f172a">replicas: 0 &#8226; image: nginx:1.26</text>
+    <text x="620" y="350" font-size="10" fill="#475569" font-style="italic">kept for rollback &#8212; can be scaled up by `kubectl rollout undo`</text>
+    <text x="620" y="375" font-size="10" fill="#475569" font-style="italic">no pods running, just the RS object</text>
+  </g>
+
+  <!-- Even older RS -->
+  <g filter="url(#sh)">
+    <rect x="600" y="415" width="540" height="100" rx="10" fill="#fef3c7" stroke="#854d0e" stroke-width="2"/>
+    <text x="620" y="438" font-size="13" font-weight="700" fill="#713f12">RS "web-1f4e9a2"  (revision 1, scaled to 0)</text>
+    <text x="620" y="457" font-size="11" fill="#0f172a">replicas: 0 &#8226; image: nginx:1.25</text>
+    <text x="620" y="475" font-size="10" fill="#475569" font-style="italic">retained per spec.revisionHistoryLimit (default 10)</text>
+    <text x="620" y="500" font-size="10" fill="#475569" font-style="italic">trimmed to keep history bounded</text>
+  </g>
+
+  <!-- Footer -->
+  <rect x="600" y="540" width="540" height="100" rx="10" fill="#dbeafe" stroke="#1e40af" stroke-width="2"/>
+  <text x="620" y="565" font-size="13" font-weight="700" fill="#1e3a8a">How rollout works</text>
+  <text x="620" y="585" font-size="11" fill="#0f172a">1. You change spec.template (e.g., new image)</text>
+  <text x="620" y="603" font-size="11" fill="#0f172a">2. Deployment controller creates a NEW ReplicaSet with the new template</text>
+  <text x="620" y="621" font-size="11" fill="#0f172a">3. Scales new RS UP and old RS DOWN, respecting maxSurge/maxUnavailable</text>
+</svg>

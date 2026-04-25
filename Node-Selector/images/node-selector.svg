@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="3" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f2937"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="600" fill="#f8fafc"/>
+  <text x="600" y="38" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">nodeSelector &#8212; Pin pods to nodes by label</text>
+  <text x="600" y="60" text-anchor="middle" font-size="13" fill="#475569">Simplest way to constrain placement: match node labels with key=value</text>
+
+  <!-- Pod -->
+  <g filter="url(#sh)">
+    <rect x="60" y="100" width="320" height="200" rx="14" fill="#fef3c7" stroke="#b45309" stroke-width="2"/>
+    <text x="80" y="125" font-size="14" font-weight="700" fill="#78350f">Pod spec</text>
+    <text x="80" y="155" font-size="11" font-family="Consolas, monospace" fill="#0f172a">apiVersion: v1</text>
+    <text x="80" y="173" font-size="11" font-family="Consolas, monospace" fill="#0f172a">kind: Pod</text>
+    <text x="80" y="191" font-size="11" font-family="Consolas, monospace" fill="#0f172a">spec:</text>
+    <text x="95" y="209" font-size="11" font-family="Consolas, monospace" fill="#0f172a">nodeSelector:</text>
+    <text x="115" y="227" font-size="11" font-family="Consolas, monospace" font-weight="700" fill="#7c2d12">disktype: ssd</text>
+    <text x="115" y="245" font-size="11" font-family="Consolas, monospace" font-weight="700" fill="#7c2d12">zone: us-east-1a</text>
+    <text x="80" y="270" font-size="10" fill="#475569" font-style="italic">scheduler will only consider</text>
+    <text x="80" y="285" font-size="10" fill="#475569" font-style="italic">nodes with ALL these labels</text>
+  </g>
+
+  <line x1="395" y1="200" x2="445" y2="200" stroke="#1f2937" stroke-width="3" marker-end="url(#ar)"/>
+  <text x="420" y="190" text-anchor="middle" font-size="10" fill="#0f172a" font-style="italic">scheduler</text>
+
+  <!-- Nodes -->
+  <text x="850" y="100" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a">Cluster nodes</text>
+
+  <g filter="url(#sh)">
+    <rect x="460" y="120" width="240" height="80" rx="10" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+    <text x="580" y="145" text-anchor="middle" font-size="13" font-weight="700" fill="#14532d">node-A &#10003;</text>
+    <text x="475" y="165" font-size="10" font-family="Consolas, monospace" fill="#0f172a">disktype=ssd</text>
+    <text x="475" y="180" font-size="10" font-family="Consolas, monospace" fill="#0f172a">zone=us-east-1a</text>
+    <text x="475" y="195" font-size="10" fill="#14532d" font-style="italic">matches all required</text>
+  </g>
+
+  <g filter="url(#sh)">
+    <rect x="720" y="120" width="240" height="80" rx="10" fill="#fee2e2" stroke="#7f1d1d" stroke-width="2"/>
+    <text x="840" y="145" text-anchor="middle" font-size="13" font-weight="700" fill="#7f1d1d">node-B &#10007;</text>
+    <text x="735" y="165" font-size="10" font-family="Consolas, monospace" fill="#0f172a">disktype=ssd</text>
+    <text x="735" y="180" font-size="10" font-family="Consolas, monospace" fill="#0f172a">zone=us-east-1b</text>
+    <text x="735" y="195" font-size="10" fill="#7f1d1d" font-style="italic">wrong zone</text>
+  </g>
+
+  <g filter="url(#sh)">
+    <rect x="460" y="220" width="240" height="80" rx="10" fill="#fee2e2" stroke="#7f1d1d" stroke-width="2"/>
+    <text x="580" y="245" text-anchor="middle" font-size="13" font-weight="700" fill="#7f1d1d">node-C &#10007;</text>
+    <text x="475" y="265" font-size="10" font-family="Consolas, monospace" fill="#0f172a">disktype=hdd</text>
+    <text x="475" y="280" font-size="10" font-family="Consolas, monospace" fill="#0f172a">zone=us-east-1a</text>
+    <text x="475" y="295" font-size="10" fill="#7f1d1d" font-style="italic">wrong disktype</text>
+  </g>
+
+  <g filter="url(#sh)">
+    <rect x="720" y="220" width="240" height="80" rx="10" fill="#fee2e2" stroke="#7f1d1d" stroke-width="2"/>
+    <text x="840" y="245" text-anchor="middle" font-size="13" font-weight="700" fill="#7f1d1d">node-D &#10007;</text>
+    <text x="735" y="265" font-size="10" font-family="Consolas, monospace" fill="#0f172a">(no labels)</text>
+    <text x="735" y="285" font-size="10" fill="#7f1d1d" font-style="italic">missing both keys</text>
+  </g>
+
+  <!-- Properties -->
+  <rect x="60" y="340" width="1080" height="240" rx="14" fill="#dbeafe" stroke="#1e40af" stroke-width="2"/>
+  <text x="80" y="368" font-size="15" font-weight="700" fill="#1e3a8a">Important properties</text>
+  <text x="80" y="395" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">Match is conjunctive (AND)</tspan> &#8212; ALL listed labels must be present on the node.</text>
+  <text x="80" y="413" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">Equality only</tspan> &#8212; no In/NotIn/Exists. For richer matching, use nodeAffinity.</text>
+  <text x="80" y="431" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">Hard requirement</tspan> &#8212; if no node matches, the pod stays Pending forever.</text>
+  <text x="80" y="449" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">Evaluated only at scheduling time.</tspan> A running pod is unaffected if labels later change on the node.</text>
+  <text x="80" y="467" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">Repels nothing.</tspan> Other pods can still land on the matching node. Use taints to keep others off.</text>
+
+  <text x="80" y="500" font-size="13" font-weight="700" fill="#1e3a8a">Built-in node labels (auto-set by Kubernetes)</text>
+  <text x="80" y="525" font-size="11" font-family="Consolas, monospace" fill="#0f172a">kubernetes.io/hostname        kubernetes.io/os         kubernetes.io/arch</text>
+  <text x="80" y="545" font-size="11" font-family="Consolas, monospace" fill="#0f172a">topology.kubernetes.io/zone   topology.kubernetes.io/region   beta.kubernetes.io/instance-type</text>
+  <text x="80" y="565" font-size="11" fill="#475569" font-style="italic">Use these for portability across clouds (e.g., select all pods in a zone without writing zone-aware code).</text>
+</svg>
