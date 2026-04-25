@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="3" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f2937"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="800" fill="#f8fafc"/>
+  <text x="600" y="38" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">Scaling, Self-Healing &amp; Adoption</text>
+  <text x="600" y="60" text-anchor="middle" font-size="13" fill="#475569">Four scenarios where the ReplicaSet controller reacts</text>
+
+  <!-- SCENARIO 1: SCALE UP -->
+  <text x="300" y="100" text-anchor="middle" font-size="16" font-weight="700" fill="#14532d">1. Scale Up (3 -&gt; 5)</text>
+  <rect x="60" y="115" width="480" height="160" rx="12" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+
+  <g filter="url(#sh)">
+    <rect x="80" y="135" width="100" height="60" rx="8" fill="#7c3aed" stroke="#4c1d95" stroke-width="1.5"/>
+    <text x="130" y="160" text-anchor="middle" font-size="11" font-weight="700" fill="white">RS replicas</text>
+    <text x="130" y="180" text-anchor="middle" font-size="14" font-weight="700" fill="white">3 -&gt; 5</text>
+  </g>
+
+  <g><rect x="200" y="140" width="50" height="50" rx="6" fill="#f59e0b"/><text x="225" y="170" text-anchor="middle" font-size="11" font-weight="700" fill="white">P1</text></g>
+  <g><rect x="260" y="140" width="50" height="50" rx="6" fill="#f59e0b"/><text x="285" y="170" text-anchor="middle" font-size="11" font-weight="700" fill="white">P2</text></g>
+  <g><rect x="320" y="140" width="50" height="50" rx="6" fill="#f59e0b"/><text x="345" y="170" text-anchor="middle" font-size="11" font-weight="700" fill="white">P3</text></g>
+  <g><rect x="380" y="140" width="50" height="50" rx="6" fill="#86efac" stroke="#14532d" stroke-width="1.5" stroke-dasharray="3,2"/><text x="405" y="170" text-anchor="middle" font-size="11" font-weight="700" fill="#14532d">P4</text></g>
+  <g><rect x="440" y="140" width="50" height="50" rx="6" fill="#86efac" stroke="#14532d" stroke-width="1.5" stroke-dasharray="3,2"/><text x="465" y="170" text-anchor="middle" font-size="11" font-weight="700" fill="#14532d">P5</text></g>
+
+  <text x="300" y="225" text-anchor="middle" font-size="11" fill="#0f172a" font-weight="700">Controller sees actual=3, desired=5</text>
+  <text x="300" y="243" text-anchor="middle" font-size="10" fill="#475569" font-style="italic">creates P4 and P5 from spec.template (in parallel)</text>
+  <text x="300" y="261" text-anchor="middle" font-size="10" fill="#0f172a">"new pods" shown with dashed borders</text>
+
+  <!-- SCENARIO 2: SCALE DOWN -->
+  <text x="900" y="100" text-anchor="middle" font-size="16" font-weight="700" fill="#7f1d1d">2. Scale Down (5 -&gt; 2)</text>
+  <rect x="660" y="115" width="480" height="160" rx="12" fill="#fee2e2" stroke="#7f1d1d" stroke-width="2"/>
+
+  <g filter="url(#sh)">
+    <rect x="680" y="135" width="100" height="60" rx="8" fill="#7c3aed" stroke="#4c1d95" stroke-width="1.5"/>
+    <text x="730" y="160" text-anchor="middle" font-size="11" font-weight="700" fill="white">RS replicas</text>
+    <text x="730" y="180" text-anchor="middle" font-size="14" font-weight="700" fill="white">5 -&gt; 2</text>
+  </g>
+
+  <g><rect x="800" y="140" width="50" height="50" rx="6" fill="#f59e0b"/><text x="825" y="170" text-anchor="middle" font-size="11" font-weight="700" fill="white">P1</text></g>
+  <g><rect x="860" y="140" width="50" height="50" rx="6" fill="#f59e0b"/><text x="885" y="170" text-anchor="middle" font-size="11" font-weight="700" fill="white">P2</text></g>
+  <g><rect x="920" y="140" width="50" height="50" rx="6" fill="#f59e0b" opacity="0.35"/><text x="945" y="170" text-anchor="middle" font-size="11" font-weight="700" fill="white">P3</text><line x1="920" y1="140" x2="970" y2="190" stroke="#7f1d1d" stroke-width="2"/></g>
+  <g><rect x="980" y="140" width="50" height="50" rx="6" fill="#f59e0b" opacity="0.35"/><text x="1005" y="170" text-anchor="middle" font-size="11" font-weight="700" fill="white">P4</text><line x1="980" y1="140" x2="1030" y2="190" stroke="#7f1d1d" stroke-width="2"/></g>
+  <g><rect x="1040" y="140" width="50" height="50" rx="6" fill="#f59e0b" opacity="0.35"/><text x="1065" y="170" text-anchor="middle" font-size="11" font-weight="700" fill="white">P5</text><line x1="1040" y1="140" x2="1090" y2="190" stroke="#7f1d1d" stroke-width="2"/></g>
+
+  <text x="900" y="225" text-anchor="middle" font-size="11" fill="#0f172a" font-weight="700">Controller sees actual=5, desired=2</text>
+  <text x="900" y="243" text-anchor="middle" font-size="10" fill="#475569" font-style="italic">deletes 3 pods using a priority order:</text>
+  <text x="900" y="261" text-anchor="middle" font-size="10" fill="#0f172a">Pending &gt; younger &gt; unhealthy &gt; on crowded node</text>
+
+  <!-- SCENARIO 3: SELF-HEALING -->
+  <text x="300" y="320" text-anchor="middle" font-size="16" font-weight="700" fill="#1e3a8a">3. Self-Healing (pod dies)</text>
+  <rect x="60" y="335" width="480" height="200" rx="12" fill="#dbeafe" stroke="#1e40af" stroke-width="2"/>
+
+  <text x="300" y="365" text-anchor="middle" font-size="11" fill="#0f172a">Step 1 — pod P2 crashes / node fails</text>
+  <g filter="url(#sh)"><rect x="80" y="375" width="100" height="60" rx="8" fill="#7c3aed" stroke="#4c1d95" stroke-width="1.5"/><text x="130" y="400" text-anchor="middle" font-size="11" font-weight="700" fill="white">RS replicas</text><text x="130" y="420" text-anchor="middle" font-size="14" font-weight="700" fill="white">3</text></g>
+  <g><rect x="200" y="380" width="50" height="50" rx="6" fill="#f59e0b"/><text x="225" y="410" text-anchor="middle" font-size="11" font-weight="700" fill="white">P1</text></g>
+  <g><rect x="260" y="380" width="50" height="50" rx="6" fill="#dc2626"/><text x="285" y="410" text-anchor="middle" font-size="11" font-weight="700" fill="white">P2</text><line x1="260" y1="380" x2="310" y2="430" stroke="#7f1d1d" stroke-width="2"/></g>
+  <g><rect x="320" y="380" width="50" height="50" rx="6" fill="#f59e0b"/><text x="345" y="410" text-anchor="middle" font-size="11" font-weight="700" fill="white">P3</text></g>
+
+  <line x1="395" y1="405" x2="430" y2="405" stroke="#1f2937" stroke-width="2.5" marker-end="url(#ar)"/>
+  <text x="412" y="395" text-anchor="middle" font-size="10" fill="#0f172a" font-style="italic">tick</text>
+
+  <text x="300" y="465" text-anchor="middle" font-size="11" fill="#0f172a">Step 2 — controller sees 2 pods, wants 3, creates a new one</text>
+  <g><rect x="200" y="475" width="50" height="50" rx="6" fill="#f59e0b"/><text x="225" y="505" text-anchor="middle" font-size="11" font-weight="700" fill="white">P1</text></g>
+  <g><rect x="320" y="475" width="50" height="50" rx="6" fill="#f59e0b"/><text x="345" y="505" text-anchor="middle" font-size="11" font-weight="700" fill="white">P3</text></g>
+  <g><rect x="380" y="475" width="50" height="50" rx="6" fill="#86efac" stroke="#14532d" stroke-width="1.5" stroke-dasharray="3,2"/><text x="405" y="505" text-anchor="middle" font-size="11" font-weight="700" fill="#14532d">P4</text></g>
+
+  <!-- SCENARIO 4: ADOPTION -->
+  <text x="900" y="320" text-anchor="middle" font-size="16" font-weight="700" fill="#854d0e">4. Adoption (orphan pod)</text>
+  <rect x="660" y="335" width="480" height="200" rx="12" fill="#fef3c7" stroke="#854d0e" stroke-width="2"/>
+
+  <text x="900" y="365" text-anchor="middle" font-size="11" fill="#0f172a">Step 1 — orphan pod has matching labels but no owner</text>
+  <g filter="url(#sh)"><rect x="680" y="375" width="100" height="60" rx="8" fill="#7c3aed" stroke="#4c1d95" stroke-width="1.5"/><text x="730" y="400" text-anchor="middle" font-size="11" font-weight="700" fill="white">RS replicas</text><text x="730" y="420" text-anchor="middle" font-size="14" font-weight="700" fill="white">3</text></g>
+  <g><rect x="800" y="380" width="50" height="50" rx="6" fill="#f59e0b"/><text x="825" y="410" text-anchor="middle" font-size="11" font-weight="700" fill="white">P1</text></g>
+  <g><rect x="860" y="380" width="50" height="50" rx="6" fill="#f59e0b"/><text x="885" y="410" text-anchor="middle" font-size="11" font-weight="700" fill="white">P2</text></g>
+  <g><rect x="920" y="380" width="50" height="50" rx="6" fill="#f59e0b"/><text x="945" y="410" text-anchor="middle" font-size="11" font-weight="700" fill="white">P3</text></g>
+  <g><rect x="1000" y="380" width="60" height="50" rx="6" fill="#fef9c3" stroke="#854d0e" stroke-width="2" stroke-dasharray="3,2"/><text x="1030" y="402" text-anchor="middle" font-size="9" font-weight="700" fill="#713f12">orphan</text><text x="1030" y="418" text-anchor="middle" font-size="11" font-weight="700" fill="#713f12">P?</text></g>
+
+  <line x1="900" y1="445" x2="900" y2="465" stroke="#1f2937" stroke-width="2.5" marker-end="url(#ar)"/>
+
+  <text x="900" y="487" text-anchor="middle" font-size="11" fill="#0f172a">Step 2 — RS adopts it, then deletes 1 to honor desired=3</text>
+  <g><rect x="800" y="495" width="50" height="50" rx="6" fill="#f59e0b"/><text x="825" y="525" text-anchor="middle" font-size="11" font-weight="700" fill="white">P1</text></g>
+  <g><rect x="860" y="495" width="50" height="50" rx="6" fill="#f59e0b"/><text x="885" y="525" text-anchor="middle" font-size="11" font-weight="700" fill="white">P2</text></g>
+  <g><rect x="920" y="495" width="50" height="50" rx="6" fill="#f59e0b" opacity="0.35"/><text x="945" y="525" text-anchor="middle" font-size="11" font-weight="700" fill="white">P3</text><line x1="920" y1="495" x2="970" y2="545" stroke="#7f1d1d" stroke-width="2"/></g>
+  <g><rect x="1000" y="495" width="50" height="50" rx="6" fill="#f59e0b"/><text x="1025" y="525" text-anchor="middle" font-size="11" font-weight="700" fill="white">P?</text></g>
+
+  <!-- ORPHANING -->
+  <text x="600" y="585" text-anchor="middle" font-size="16" font-weight="700" fill="#3b0764">5. Orphaning (pod loses matching label)</text>
+  <rect x="60" y="600" width="1080" height="170" rx="12" fill="#ede9fe" stroke="#5b21b6" stroke-width="2"/>
+
+  <text x="600" y="630" text-anchor="middle" font-size="11" fill="#0f172a">If you remove the matching label from a pod, the RS no longer "owns" it. The selector won't match.</text>
+  <text x="600" y="650" text-anchor="middle" font-size="11" fill="#0f172a">The RS sees one fewer pod and creates a replacement. Now you have your original pod (running standalone) <tspan font-weight="700">+</tspan> a fresh pod managed by the RS.</text>
+
+  <g filter="url(#sh)"><rect x="80" y="675" width="100" height="60" rx="8" fill="#7c3aed" stroke="#4c1d95" stroke-width="1.5"/><text x="130" y="700" text-anchor="middle" font-size="11" font-weight="700" fill="white">RS replicas</text><text x="130" y="720" text-anchor="middle" font-size="14" font-weight="700" fill="white">3</text></g>
+  <g><rect x="220" y="680" width="50" height="50" rx="6" fill="#f59e0b"/><text x="245" y="710" text-anchor="middle" font-size="11" font-weight="700" fill="white">P1</text></g>
+  <g><rect x="290" y="680" width="50" height="50" rx="6" fill="#f59e0b"/><text x="315" y="710" text-anchor="middle" font-size="11" font-weight="700" fill="white">P3</text></g>
+  <g><rect x="360" y="680" width="50" height="50" rx="6" fill="#86efac" stroke="#14532d" stroke-width="1.5" stroke-dasharray="3,2"/><text x="385" y="710" text-anchor="middle" font-size="11" font-weight="700" fill="#14532d">P4</text></g>
+
+  <text x="490" y="710" font-size="14" fill="#0f172a">+</text>
+
+  <g><rect x="540" y="680" width="80" height="50" rx="6" fill="#94a3b8"/><text x="580" y="703" text-anchor="middle" font-size="9" font-weight="700" fill="white">P2 (orphan)</text><text x="580" y="720" text-anchor="middle" font-size="9" fill="#f1f5f9">no label</text></g>
+
+  <text x="780" y="710" font-size="11" fill="#0f172a" font-style="italic">P2 keeps running on its own, untouched.</text>
+</svg>
