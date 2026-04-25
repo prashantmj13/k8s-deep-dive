@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <filter id="sh2" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="3" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+    <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f2937"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="700" fill="#f8fafc"/>
+
+  <text x="600" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">How a Pod Gets Created — End-to-End Flow</text>
+  <text x="600" y="60" text-anchor="middle" font-size="13" fill="#475569">From `kubectl apply` to a running container</text>
+
+  <!-- Lanes (swimlane style) -->
+  <!-- Lane labels -->
+  <g font-size="12" font-weight="700" fill="#0f172a">
+    <rect x="40" y="100" width="140" height="540" rx="8" fill="#ede9fe" stroke="#7c3aed"/>
+    <text x="110" y="380" text-anchor="middle" transform="rotate(-90 110 380)">USER</text>
+
+    <rect x="190" y="100" width="280" height="540" rx="8" fill="#dbeafe" stroke="#1e40af"/>
+    <text x="330" y="124" text-anchor="middle">CONTROL PLANE</text>
+
+    <rect x="480" y="100" width="280" height="540" rx="8" fill="#dbeafe" stroke="#1e40af"/>
+    <text x="620" y="124" text-anchor="middle">CONTROL PLANE</text>
+
+    <rect x="770" y="100" width="390" height="540" rx="8" fill="#dcfce7" stroke="#15803d"/>
+    <text x="965" y="124" text-anchor="middle">WORKER NODE</text>
+  </g>
+
+  <!-- Steps -->
+  <!-- 1. User runs kubectl -->
+  <g filter="url(#sh2)">
+    <rect x="55" y="170" width="115" height="70" rx="8" fill="#8b5cf6" stroke="#5b21b6" stroke-width="2"/>
+    <text x="112" y="195" text-anchor="middle" font-size="11" font-weight="700" fill="white">1. kubectl</text>
+    <text x="112" y="213" text-anchor="middle" font-size="10" fill="#ede9fe">apply -f</text>
+    <text x="112" y="227" text-anchor="middle" font-size="10" fill="#ede9fe">pod.yaml</text>
+  </g>
+
+  <!-- 2. API Server -->
+  <g filter="url(#sh2)">
+    <rect x="210" y="170" width="240" height="70" rx="8" fill="#2563eb" stroke="#1e3a8a" stroke-width="2"/>
+    <text x="330" y="193" text-anchor="middle" font-size="13" font-weight="700" fill="white">2. kube-apiserver</text>
+    <text x="330" y="212" text-anchor="middle" font-size="10" fill="#dbeafe">Authenticate, authorize, validate</text>
+    <text x="330" y="227" text-anchor="middle" font-size="10" fill="#dbeafe">admission controllers run</text>
+  </g>
+
+  <!-- 3. etcd -->
+  <g filter="url(#sh2)">
+    <rect x="210" y="260" width="240" height="70" rx="8" fill="#0891b2" stroke="#155e75" stroke-width="2"/>
+    <text x="330" y="283" text-anchor="middle" font-size="13" font-weight="700" fill="white">3. etcd</text>
+    <text x="330" y="302" text-anchor="middle" font-size="10" fill="#cffafe">Pod object persisted</text>
+    <text x="330" y="317" text-anchor="middle" font-size="10" fill="#cffafe">(spec.nodeName = empty)</text>
+  </g>
+
+  <!-- 4. Scheduler -->
+  <g filter="url(#sh2)">
+    <rect x="500" y="170" width="240" height="70" rx="8" fill="#0d9488" stroke="#115e59" stroke-width="2"/>
+    <text x="620" y="193" text-anchor="middle" font-size="13" font-weight="700" fill="white">4. kube-scheduler</text>
+    <text x="620" y="212" text-anchor="middle" font-size="10" fill="#ccfbf1">Watches for unscheduled pods</text>
+    <text x="620" y="227" text-anchor="middle" font-size="10" fill="#ccfbf1">picks best node, patches spec.nodeName</text>
+  </g>
+
+  <!-- 5. API Server updates pod -->
+  <g filter="url(#sh2)">
+    <rect x="500" y="260" width="240" height="70" rx="8" fill="#2563eb" stroke="#1e3a8a" stroke-width="2"/>
+    <text x="620" y="283" text-anchor="middle" font-size="13" font-weight="700" fill="white">5. kube-apiserver</text>
+    <text x="620" y="302" text-anchor="middle" font-size="10" fill="#dbeafe">Updates pod &amp; saves to etcd</text>
+    <text x="620" y="317" text-anchor="middle" font-size="10" fill="#dbeafe">spec.nodeName = node-2</text>
+  </g>
+
+  <!-- 6. Kubelet on Worker Node -->
+  <g filter="url(#sh2)">
+    <rect x="790" y="170" width="350" height="70" rx="8" fill="#16a34a" stroke="#14532d" stroke-width="2"/>
+    <text x="965" y="193" text-anchor="middle" font-size="13" font-weight="700" fill="white">6. kubelet (on assigned node)</text>
+    <text x="965" y="212" text-anchor="middle" font-size="10" fill="#dcfce7">Watches API Server &#8226; sees pod assigned to me</text>
+    <text x="965" y="227" text-anchor="middle" font-size="10" fill="#dcfce7">Pulls config &amp; image references</text>
+  </g>
+
+  <!-- 7. Container Runtime -->
+  <g filter="url(#sh2)">
+    <rect x="790" y="260" width="350" height="70" rx="8" fill="#0891b2" stroke="#155e75" stroke-width="2"/>
+    <text x="965" y="283" text-anchor="middle" font-size="13" font-weight="700" fill="white">7. Container Runtime (containerd)</text>
+    <text x="965" y="302" text-anchor="middle" font-size="10" fill="#cffafe">Pulls image &#8226; creates container &amp; namespaces</text>
+    <text x="965" y="317" text-anchor="middle" font-size="10" fill="#cffafe">Mounts volumes &#8226; starts process</text>
+  </g>
+
+  <!-- 8. Kube-proxy / CNI -->
+  <g filter="url(#sh2)">
+    <rect x="790" y="350" width="170" height="70" rx="8" fill="#65a30d" stroke="#365314" stroke-width="2"/>
+    <text x="875" y="375" text-anchor="middle" font-size="13" font-weight="700" fill="white">8. kube-proxy</text>
+    <text x="875" y="393" text-anchor="middle" font-size="10" fill="#ecfccb">Updates iptables/IPVS</text>
+    <text x="875" y="408" text-anchor="middle" font-size="10" fill="#ecfccb">to route traffic to pod</text>
+  </g>
+
+  <g filter="url(#sh2)">
+    <rect x="975" y="350" width="160" height="70" rx="8" fill="#7c3aed" stroke="#4c1d95" stroke-width="2"/>
+    <text x="1055" y="375" text-anchor="middle" font-size="13" font-weight="700" fill="white">8b. CNI plugin</text>
+    <text x="1055" y="393" text-anchor="middle" font-size="10" fill="#ede9fe">Assigns pod IP</text>
+    <text x="1055" y="408" text-anchor="middle" font-size="10" fill="#ede9fe">(Calico / Flannel / etc.)</text>
+  </g>
+
+  <!-- 9. Pod running -->
+  <g filter="url(#sh2)">
+    <rect x="790" y="445" width="350" height="100" rx="10" fill="#f59e0b" stroke="#b45309" stroke-width="2"/>
+    <text x="965" y="470" text-anchor="middle" font-size="14" font-weight="700" fill="white">9. POD RUNNING</text>
+    <circle cx="945" cy="500" r="16" fill="#fff" stroke="#b45309" stroke-width="1.5"/>
+    <text x="945" y="505" text-anchor="middle" font-size="11" font-weight="700" fill="#b45309">C</text>
+    <circle cx="985" cy="500" r="16" fill="#fff" stroke="#b45309" stroke-width="1.5"/>
+    <text x="985" y="505" text-anchor="middle" font-size="11" font-weight="700" fill="#b45309">C</text>
+    <text x="965" y="535" text-anchor="middle" font-size="10" fill="#fff7ed">Containers running, IP assigned, traffic flowing</text>
+  </g>
+
+  <!-- 10. Status update -->
+  <g filter="url(#sh2)">
+    <rect x="500" y="445" width="240" height="100" rx="8" fill="#2563eb" stroke="#1e3a8a" stroke-width="2"/>
+    <text x="620" y="475" text-anchor="middle" font-size="13" font-weight="700" fill="white">10. kubelet -> apiserver</text>
+    <text x="620" y="497" text-anchor="middle" font-size="10" fill="#dbeafe">Reports pod status: Running</text>
+    <text x="620" y="514" text-anchor="middle" font-size="10" fill="#dbeafe">Persisted in etcd</text>
+    <text x="620" y="531" text-anchor="middle" font-size="10" fill="#dbeafe">`kubectl get pods` now shows Ready</text>
+  </g>
+
+  <!-- Arrows -->
+  <line x1="170" y1="205" x2="208" y2="205" stroke="#1f2937" stroke-width="2.5" marker-end="url(#ar2)"/>
+  <line x1="330" y1="240" x2="330" y2="258" stroke="#1f2937" stroke-width="2.5" marker-end="url(#ar2)"/>
+  <line x1="450" y1="295" x2="498" y2="205" stroke="#1f2937" stroke-width="2.5" marker-end="url(#ar2)"/>
+  <line x1="620" y1="240" x2="620" y2="258" stroke="#1f2937" stroke-width="2.5" marker-end="url(#ar2)"/>
+  <line x1="740" y1="295" x2="788" y2="205" stroke="#1f2937" stroke-width="2.5" marker-end="url(#ar2)"/>
+  <line x1="965" y1="240" x2="965" y2="258" stroke="#1f2937" stroke-width="2.5" marker-end="url(#ar2)"/>
+  <line x1="965" y1="330" x2="875" y2="348" stroke="#1f2937" stroke-width="2.5" marker-end="url(#ar2)"/>
+  <line x1="965" y1="330" x2="1055" y2="348" stroke="#1f2937" stroke-width="2.5" marker-end="url(#ar2)"/>
+  <line x1="965" y1="420" x2="965" y2="443" stroke="#1f2937" stroke-width="2.5" marker-end="url(#ar2)"/>
+  <line x1="790" y1="490" x2="742" y2="490" stroke="#1f2937" stroke-width="2.5" marker-end="url(#ar2)"/>
+
+  <!-- Notes -->
+  <g font-size="11" fill="#334155">
+    <text x="60" y="595" font-weight="700" fill="#0f172a">Key insight:</text>
+    <text x="60" y="612">The Scheduler never talks to the kubelet directly. It only patches the pod object via the API Server.</text>
+    <text x="60" y="628">The kubelet "watches" the API Server for any pod whose spec.nodeName matches its own node — that's how it knows what to run.</text>
+    <text x="60" y="644">This indirect, declarative pattern is why Kubernetes can recover gracefully when components restart.</text>
+  </g>
+</svg>

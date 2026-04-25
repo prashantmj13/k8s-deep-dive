@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <filter id="sh3" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="3" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <rect width="900" height="500" fill="#f8fafc"/>
+  <text x="450" y="36" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">Anatomy of a Pod</text>
+  <text x="450" y="58" text-anchor="middle" font-size="13" fill="#475569">A pod is a wrapper around one or more containers that share network &amp; storage</text>
+
+  <!-- Pod outline -->
+  <rect x="80" y="100" width="740" height="350" rx="14" fill="#fef3c7" stroke="#b45309" stroke-width="2.5"/>
+  <text x="120" y="130" font-size="16" font-weight="700" fill="#78350f">Pod</text>
+  <text x="120" y="148" font-size="11" fill="#92400e" font-style="italic">IP: 10.244.1.5  &#8226;  Namespace: default</text>
+
+  <!-- Shared network -->
+  <g filter="url(#sh3)">
+    <rect x="110" y="170" width="320" height="70" rx="10" fill="#3b82f6" stroke="#1e40af" stroke-width="2"/>
+    <text x="270" y="195" text-anchor="middle" font-size="13" font-weight="700" fill="white">Shared Network Namespace</text>
+    <text x="270" y="215" text-anchor="middle" font-size="10" fill="#dbeafe">Same IP &#8226; localhost between containers</text>
+    <text x="270" y="230" text-anchor="middle" font-size="10" fill="#dbeafe">Shared port space</text>
+  </g>
+
+  <!-- Shared storage -->
+  <g filter="url(#sh3)">
+    <rect x="470" y="170" width="320" height="70" rx="10" fill="#7c3aed" stroke="#4c1d95" stroke-width="2"/>
+    <text x="630" y="195" text-anchor="middle" font-size="13" font-weight="700" fill="white">Shared Volumes</text>
+    <text x="630" y="215" text-anchor="middle" font-size="10" fill="#ede9fe">emptyDir, configMap, secret, PVC</text>
+    <text x="630" y="230" text-anchor="middle" font-size="10" fill="#ede9fe">Mounted into each container</text>
+  </g>
+
+  <!-- Container 1: Main app -->
+  <g filter="url(#sh3)">
+    <rect x="110" y="270" width="200" height="160" rx="10" fill="#16a34a" stroke="#14532d" stroke-width="2"/>
+    <text x="210" y="295" text-anchor="middle" font-size="14" font-weight="700" fill="white">Main Container</text>
+    <text x="210" y="315" text-anchor="middle" font-size="11" fill="#dcfce7">e.g., nginx:1.25</text>
+    <line x1="125" y1="328" x2="295" y2="328" stroke="#dcfce7" stroke-width="1"/>
+    <text x="210" y="350" text-anchor="middle" font-size="10" fill="#dcfce7">Image, command, ports</text>
+    <text x="210" y="368" text-anchor="middle" font-size="10" fill="#dcfce7">CPU/memory requests</text>
+    <text x="210" y="386" text-anchor="middle" font-size="10" fill="#dcfce7">Environment variables</text>
+    <text x="210" y="404" text-anchor="middle" font-size="10" fill="#dcfce7">Liveness / Readiness probes</text>
+  </g>
+
+  <!-- Container 2: Sidecar -->
+  <g filter="url(#sh3)">
+    <rect x="350" y="270" width="200" height="160" rx="10" fill="#0d9488" stroke="#115e59" stroke-width="2"/>
+    <text x="450" y="295" text-anchor="middle" font-size="14" font-weight="700" fill="white">Sidecar Container</text>
+    <text x="450" y="315" text-anchor="middle" font-size="11" fill="#ccfbf1">e.g., log shipper</text>
+    <line x1="365" y1="328" x2="535" y2="328" stroke="#ccfbf1" stroke-width="1"/>
+    <text x="450" y="350" text-anchor="middle" font-size="10" fill="#ccfbf1">Reads logs from shared</text>
+    <text x="450" y="366" text-anchor="middle" font-size="10" fill="#ccfbf1">volume</text>
+    <text x="450" y="385" text-anchor="middle" font-size="10" fill="#ccfbf1">Talks to main via</text>
+    <text x="450" y="401" text-anchor="middle" font-size="10" fill="#ccfbf1">localhost:8080</text>
+  </g>
+
+  <!-- Init container -->
+  <g filter="url(#sh3)">
+    <rect x="590" y="270" width="200" height="160" rx="10" fill="#94a3b8" stroke="#475569" stroke-width="2" stroke-dasharray="4,3"/>
+    <text x="690" y="295" text-anchor="middle" font-size="14" font-weight="700" fill="white">Init Container</text>
+    <text x="690" y="315" text-anchor="middle" font-size="11" fill="#f1f5f9">runs once, before main</text>
+    <line x1="605" y1="328" x2="775" y2="328" stroke="#f1f5f9" stroke-width="1"/>
+    <text x="690" y="350" text-anchor="middle" font-size="10" fill="#f1f5f9">Setup work:</text>
+    <text x="690" y="366" text-anchor="middle" font-size="10" fill="#f1f5f9">- DB migrations</text>
+    <text x="690" y="384" text-anchor="middle" font-size="10" fill="#f1f5f9">- Wait for dependency</text>
+    <text x="690" y="402" text-anchor="middle" font-size="10" fill="#f1f5f9">- Download config</text>
+  </g>
+</svg>
