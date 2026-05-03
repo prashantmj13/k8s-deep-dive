@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="3" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f2937"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="600" fill="#f8fafc"/>
+  <text x="600" y="38" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">DaemonSet &#8212; One Pod Per Node</text>
+  <text x="600" y="60" text-anchor="middle" font-size="13" fill="#475569">Auto-creates a copy of the pod on every (or selected) node &#8226; Auto-adds &amp; removes when nodes join/leave</text>
+
+  <!-- DaemonSet object -->
+  <g filter="url(#sh)">
+    <rect x="60" y="100" width="280" height="240" rx="14" fill="#7c3aed" stroke="#3b0764" stroke-width="2"/>
+    <text x="200" y="130" text-anchor="middle" font-size="16" font-weight="700" fill="white">DaemonSet "node-agent"</text>
+    <text x="80" y="160" font-size="11" font-family="Consolas, monospace" fill="#ede9fe">apiVersion: apps/v1</text>
+    <text x="80" y="180" font-size="11" font-family="Consolas, monospace" fill="#ede9fe">kind: DaemonSet</text>
+    <text x="80" y="200" font-size="11" font-family="Consolas, monospace" fill="#ede9fe">spec:</text>
+    <text x="95" y="218" font-size="11" font-family="Consolas, monospace" fill="#ede9fe">selector:</text>
+    <text x="110" y="234" font-size="11" font-family="Consolas, monospace" fill="#ede9fe">matchLabels:</text>
+    <text x="125" y="250" font-size="11" font-family="Consolas, monospace" fill="#ede9fe">app: node-agent</text>
+    <text x="95" y="270" font-size="11" font-family="Consolas, monospace" fill="#ede9fe">template:</text>
+    <text x="110" y="286" font-size="11" font-family="Consolas, monospace" fill="#ede9fe">metadata:</text>
+    <text x="125" y="302" font-size="11" font-family="Consolas, monospace" fill="#ede9fe">labels:</text>
+    <text x="140" y="318" font-size="11" font-family="Consolas, monospace" fill="#ede9fe">app: node-agent</text>
+  </g>
+
+  <line x1="345" y1="220" x2="395" y2="220" stroke="#1f2937" stroke-width="3" marker-end="url(#ar)"/>
+
+  <!-- Nodes -->
+  <text x="780" y="100" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a">Cluster has 4 nodes &#8594; 4 pods (one per node)</text>
+
+  <g filter="url(#sh)"><rect x="420" y="130" width="180" height="100" rx="10" fill="#dcfce7" stroke="#15803d"/><text x="510" y="155" text-anchor="middle" font-size="13" font-weight="700" fill="#14532d">node-1</text><rect x="450" y="170" width="120" height="40" rx="6" fill="#f59e0b"/><text x="510" y="195" text-anchor="middle" font-size="11" font-weight="700" fill="white">DS pod</text></g>
+  <g filter="url(#sh)"><rect x="620" y="130" width="180" height="100" rx="10" fill="#dcfce7" stroke="#15803d"/><text x="710" y="155" text-anchor="middle" font-size="13" font-weight="700" fill="#14532d">node-2</text><rect x="650" y="170" width="120" height="40" rx="6" fill="#f59e0b"/><text x="710" y="195" text-anchor="middle" font-size="11" font-weight="700" fill="white">DS pod</text></g>
+  <g filter="url(#sh)"><rect x="820" y="130" width="180" height="100" rx="10" fill="#dcfce7" stroke="#15803d"/><text x="910" y="155" text-anchor="middle" font-size="13" font-weight="700" fill="#14532d">node-3</text><rect x="850" y="170" width="120" height="40" rx="6" fill="#f59e0b"/><text x="910" y="195" text-anchor="middle" font-size="11" font-weight="700" fill="white">DS pod</text></g>
+  <g filter="url(#sh)"><rect x="1020" y="130" width="160" height="100" rx="10" fill="#dcfce7" stroke="#15803d"/><text x="1100" y="155" text-anchor="middle" font-size="13" font-weight="700" fill="#14532d">node-4</text><rect x="1040" y="170" width="120" height="40" rx="6" fill="#f59e0b"/><text x="1100" y="195" text-anchor="middle" font-size="11" font-weight="700" fill="white">DS pod</text></g>
+
+  <text x="600" y="280" text-anchor="middle" font-size="12" fill="#0f172a">When a 5th node joins -&gt; DS controller creates a 5th pod automatically.</text>
+  <text x="600" y="300" text-anchor="middle" font-size="12" fill="#0f172a">When a node is deleted -&gt; the pod on it is removed.</text>
+  <text x="600" y="320" text-anchor="middle" font-size="12" fill="#0f172a">No replicas field. Count = number of matching nodes.</text>
+
+  <!-- Common uses -->
+  <rect x="60" y="370" width="1080" height="200" rx="14" fill="#fef3c7" stroke="#854d0e" stroke-width="2"/>
+  <text x="80" y="398" font-size="14" font-weight="700" fill="#713f12">Where DaemonSets are used in real clusters</text>
+  <text x="80" y="425" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">CNI agents</tspan> &#8212; cilium-agent, calico-node, weave-net</text>
+  <text x="80" y="443" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">kube-proxy</tspan> &#8212; one per node, programs iptables/IPVS</text>
+  <text x="80" y="461" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">Log shippers</tspan> &#8212; fluent-bit, fluentd, vector reading /var/log on each host</text>
+  <text x="80" y="479" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">Node exporters</tspan> &#8212; node_exporter, kube-state-metrics agents for Prometheus</text>
+  <text x="80" y="497" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">Storage drivers</tspan> &#8212; CSI plugins, local-path-provisioner</text>
+  <text x="80" y="515" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">Security agents</tspan> &#8212; falco, gke-metadata-server, cluster-autoscaler-extender</text>
+  <text x="80" y="540" font-size="11" font-weight="700" fill="#713f12">Common need: each node should have one and only one such agent.</text>
+  <text x="80" y="558" font-size="11" fill="#0f172a">DaemonSets typically include broad tolerations to land on EVERY node, including tainted control-plane nodes.</text>
+</svg>

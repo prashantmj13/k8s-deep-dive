@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="3" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f2937"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="600" fill="#f8fafc"/>
+  <text x="600" y="38" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">Priority Classes &amp; Preemption</text>
+  <text x="600" y="60" text-anchor="middle" font-size="13" fill="#475569">Higher-priority pods can EVICT lower-priority ones if the cluster is full</text>
+
+  <!-- Before -->
+  <text x="300" y="100" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a">Before: cluster full</text>
+  <g filter="url(#sh)">
+    <rect x="60" y="120" width="540" height="100" rx="10" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+    <text x="80" y="145" font-size="12" font-weight="700" fill="#14532d">Node (8 CPU)</text>
+
+    <rect x="80" y="160" width="160" height="40" rx="6" fill="#94a3b8"/>
+    <text x="160" y="185" text-anchor="middle" font-size="10" font-weight="700" fill="white">batch-A (low: 0)</text>
+
+    <rect x="250" y="160" width="160" height="40" rx="6" fill="#94a3b8"/>
+    <text x="330" y="185" text-anchor="middle" font-size="10" font-weight="700" fill="white">batch-B (low: 0)</text>
+
+    <rect x="420" y="160" width="160" height="40" rx="6" fill="#3b82f6"/>
+    <text x="500" y="185" text-anchor="middle" font-size="10" font-weight="700" fill="white">api (high: 1000)</text>
+  </g>
+
+  <text x="300" y="245" text-anchor="middle" font-size="11" fill="#0f172a">All 8 CPUs in use. A new pod arrives:</text>
+
+  <g filter="url(#sh)">
+    <rect x="160" y="260" width="280" height="50" rx="8" fill="#dc2626" stroke="#7f1d1d" stroke-width="2"/>
+    <text x="300" y="290" text-anchor="middle" font-size="13" font-weight="700" fill="white">critical (priority: 10000)</text>
+  </g>
+
+  <line x1="300" y1="320" x2="300" y2="350" stroke="#1f2937" stroke-width="3" marker-end="url(#ar)"/>
+  <text x="320" y="340" font-size="11" fill="#0f172a" font-style="italic">scheduler can't fit it</text>
+
+  <!-- After -->
+  <text x="900" y="100" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a">After: scheduler preempts to make room</text>
+  <g filter="url(#sh)">
+    <rect x="660" y="120" width="540" height="100" rx="10" fill="#fee2e2" stroke="#7f1d1d" stroke-width="2"/>
+    <text x="680" y="145" font-size="12" font-weight="700" fill="#7f1d1d">Same node</text>
+
+    <rect x="680" y="160" width="160" height="40" rx="6" fill="#94a3b8" opacity="0.3"/>
+    <text x="760" y="185" text-anchor="middle" font-size="10" font-weight="700" fill="white">batch-A (evicted)</text>
+    <line x1="680" y1="160" x2="840" y2="200" stroke="#7f1d1d" stroke-width="2"/>
+
+    <rect x="850" y="160" width="160" height="40" rx="6" fill="#3b82f6"/>
+    <text x="930" y="185" text-anchor="middle" font-size="10" font-weight="700" fill="white">api (high: 1000)</text>
+
+    <rect x="1020" y="160" width="160" height="40" rx="6" fill="#dc2626"/>
+    <text x="1100" y="185" text-anchor="middle" font-size="10" font-weight="700" fill="white">critical (10000)</text>
+  </g>
+
+  <text x="900" y="240" text-anchor="middle" font-size="11" fill="#0f172a">batch-A was lowest priority &#8212; evicted to fit `critical`.</text>
+  <text x="900" y="260" text-anchor="middle" font-size="11" fill="#0f172a">batch-B was already evicted on a different node (not shown).</text>
+  <text x="900" y="280" text-anchor="middle" font-size="11" fill="#7f1d1d" font-weight="700">Eviction is graceful (SIGTERM, terminationGracePeriodSeconds).</text>
+
+  <!-- Built-ins -->
+  <rect x="60" y="380" width="1080" height="200" rx="14" fill="#fef3c7" stroke="#854d0e" stroke-width="2"/>
+  <text x="80" y="408" font-size="14" font-weight="700" fill="#713f12">Built-in PriorityClasses (auto-created by Kubernetes)</text>
+  <text x="80" y="435" font-size="12" font-family="Consolas, monospace" fill="#0f172a">system-cluster-critical    value=2000000000   for cluster-wide control plane (kube-dns, etc.)</text>
+  <text x="80" y="455" font-size="12" font-family="Consolas, monospace" fill="#0f172a">system-node-critical       value=2000001000   for kubelet-essential add-ons (CNI, kube-proxy)</text>
+  <text x="80" y="478" font-size="11" fill="#475569" font-style="italic">Both are above 1 billion; user pods cannot exceed this without explicit allowance.</text>
+
+  <text x="80" y="510" font-size="14" font-weight="700" fill="#713f12">Custom PriorityClasses you create</text>
+  <text x="80" y="535" font-size="11" fill="#0f172a">&#8226; <tspan font-family="Consolas, monospace">value</tspan>: an integer; higher = higher priority. Range -2,147,483,648 to 1,000,000,000 (for non-system classes).</text>
+  <text x="80" y="553" font-size="11" fill="#0f172a">&#8226; <tspan font-family="Consolas, monospace">preemptionPolicy</tspan>: <tspan font-family="Consolas, monospace">PreemptLowerPriority</tspan> (default) or <tspan font-family="Consolas, monospace">Never</tspan> (must wait, no eviction).</text>
+  <text x="80" y="571" font-size="11" fill="#0f172a">&#8226; <tspan font-family="Consolas, monospace">globalDefault: true</tspan>: applies to pods that don't specify priorityClassName.</text>
+</svg>

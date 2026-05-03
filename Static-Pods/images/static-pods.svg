@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="3" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f2937"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="600" fill="#f8fafc"/>
+  <text x="600" y="38" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">Static Pods &#8212; Run by the Kubelet, Not the API</text>
+  <text x="600" y="60" text-anchor="middle" font-size="13" fill="#475569">YAML file dropped on the node &#8226; Kubelet reads it directly &#8226; Bypasses scheduler &amp; API for creation</text>
+
+  <!-- Manifest dir -->
+  <g filter="url(#sh)">
+    <rect x="60" y="100" width="280" height="200" rx="14" fill="#1e293b" stroke="#020617" stroke-width="2"/>
+    <text x="80" y="125" font-size="13" font-weight="700" fill="#fbbf24">/etc/kubernetes/manifests/</text>
+    <text x="80" y="155" font-size="11" font-family="Consolas, monospace" fill="#86efac">etcd.yaml</text>
+    <text x="80" y="175" font-size="11" font-family="Consolas, monospace" fill="#86efac">kube-apiserver.yaml</text>
+    <text x="80" y="195" font-size="11" font-family="Consolas, monospace" fill="#86efac">kube-controller-manager.yaml</text>
+    <text x="80" y="215" font-size="11" font-family="Consolas, monospace" fill="#86efac">kube-scheduler.yaml</text>
+    <text x="80" y="245" font-size="10" fill="#94a3b8" font-style="italic">YAML files. The kubelet</text>
+    <text x="80" y="263" font-size="10" fill="#94a3b8" font-style="italic">watches this directory.</text>
+    <text x="80" y="285" font-size="10" fill="#cbd5e1">Path is set in /var/lib/kubelet/config.yaml</text>
+  </g>
+
+  <line x1="345" y1="200" x2="395" y2="200" stroke="#1f2937" stroke-width="3" marker-end="url(#ar)"/>
+  <text x="370" y="190" text-anchor="middle" font-size="10" fill="#0f172a" font-style="italic">reads</text>
+
+  <!-- Kubelet -->
+  <g filter="url(#sh)">
+    <rect x="420" y="120" width="200" height="160" rx="14" fill="#16a34a" stroke="#14532d" stroke-width="2"/>
+    <text x="520" y="155" text-anchor="middle" font-size="15" font-weight="700" fill="white">kubelet</text>
+    <text x="520" y="180" text-anchor="middle" font-size="11" fill="#dcfce7">on this node</text>
+    <text x="520" y="210" text-anchor="middle" font-size="10" fill="#dcfce7">Manages static pods</text>
+    <text x="520" y="226" text-anchor="middle" font-size="10" fill="#dcfce7">independently of API</text>
+    <text x="520" y="252" text-anchor="middle" font-size="10" fill="#dcfce7" font-style="italic">starts, stops, restarts</text>
+    <text x="520" y="266" text-anchor="middle" font-size="10" fill="#dcfce7" font-style="italic">based on file changes</text>
+  </g>
+
+  <line x1="625" y1="200" x2="675" y2="200" stroke="#1f2937" stroke-width="3" marker-end="url(#ar)"/>
+
+  <!-- Pods running -->
+  <g filter="url(#sh)">
+    <rect x="700" y="120" width="160" height="160" rx="10" fill="#f59e0b" stroke="#b45309"/>
+    <text x="780" y="150" text-anchor="middle" font-size="13" font-weight="700" fill="white">etcd</text>
+    <text x="780" y="170" text-anchor="middle" font-size="10" fill="#fff7ed">running</text>
+    <text x="780" y="220" text-anchor="middle" font-size="13" font-weight="700" fill="white">kube-apiserver</text>
+    <text x="780" y="240" text-anchor="middle" font-size="10" fill="#fff7ed">running</text>
+  </g>
+
+  <line x1="540" y1="290" x2="540" y2="340" stroke="#1f2937" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#ar)"/>
+  <text x="555" y="320" font-size="11" fill="#0f172a" font-style="italic">creates "mirror"</text>
+
+  <!-- API mirror pod -->
+  <g filter="url(#sh)">
+    <rect x="900" y="120" width="240" height="160" rx="14" fill="#2563eb" stroke="#1e3a8a" stroke-width="2"/>
+    <text x="1020" y="150" text-anchor="middle" font-size="14" font-weight="700" fill="white">API Server</text>
+    <text x="1020" y="180" text-anchor="middle" font-size="11" fill="#dbeafe">"mirror pod"</text>
+    <text x="1020" y="210" text-anchor="middle" font-size="10" fill="#dbeafe">read-only copy in API</text>
+    <text x="1020" y="226" text-anchor="middle" font-size="10" fill="#dbeafe">named: etcd-&lt;node&gt;</text>
+    <text x="1020" y="252" text-anchor="middle" font-size="10" fill="#dbeafe" font-style="italic">Visible to `kubectl get pods`</text>
+    <text x="1020" y="266" text-anchor="middle" font-size="10" fill="#dbeafe" font-style="italic">but cannot be deleted via kubectl</text>
+  </g>
+
+  <line x1="615" y1="280" x2="900" y2="200" stroke="#1f2937" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#ar)"/>
+  <text x="780" y="335" text-anchor="middle" font-size="11" fill="#0f172a" font-style="italic">kubelet posts mirror to API</text>
+
+  <!-- Properties -->
+  <rect x="60" y="370" width="1080" height="200" rx="14" fill="#fef3c7" stroke="#854d0e" stroke-width="2"/>
+  <text x="80" y="397" font-size="14" font-weight="700" fill="#713f12">Key properties of static pods</text>
+  <text x="80" y="423" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">Created without the API server.</tspan> Even if API is down, the kubelet keeps them running. This is how the control plane bootstraps.</text>
+  <text x="80" y="441" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">Pod name = &lt;original&gt;-&lt;nodeName&gt;.</tspan> Kubelet appends the node name to make it unique.</text>
+  <text x="80" y="459" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">Cannot be deleted via kubectl.</tspan> The mirror pod returns; only deleting the manifest file works.</text>
+  <text x="80" y="477" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">No controller can adopt them.</tspan> They live until the file is removed.</text>
+  <text x="80" y="495" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">Health probes still work.</tspan> Failed liveness =&gt; container restart, just like normal pods.</text>
+  <text x="80" y="513" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">Resources are still enforced.</tspan> Cgroups, memory limits, etc. apply normally.</text>
+  <text x="80" y="538" font-size="11" font-weight="700" fill="#713f12">Use case: control plane (API server, etcd, scheduler, controller-manager) on a kubeadm cluster.</text>
+  <text x="80" y="558" font-size="11" fill="#0f172a">For everything else, prefer DaemonSets / Deployments / StatefulSets &#8212; static pods are an escape hatch.</text>
+</svg>

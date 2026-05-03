@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="3" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="600" fill="#f8fafc"/>
+  <text x="600" y="38" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">Resource Limits &#8212; The Hard Ceiling</text>
+  <text x="600" y="60" text-anchor="middle" font-size="13" fill="#475569">Limits = "I cannot use more than this" &#8226; Enforced by the kernel via cgroups</text>
+
+  <!-- Memory -->
+  <text x="300" y="100" text-anchor="middle" font-size="16" font-weight="700" fill="#7f1d1d">Memory limit (uncompressible)</text>
+
+  <g filter="url(#sh)">
+    <rect x="60" y="120" width="540" height="180" rx="14" fill="#fee2e2" stroke="#7f1d1d" stroke-width="2"/>
+  </g>
+  <text x="80" y="148" font-size="13" font-weight="700" fill="#7f1d1d">If container exceeds memory limit:</text>
+  <text x="80" y="172" font-size="12" fill="#0f172a">&#8226; Kernel <tspan font-weight="700">OOM-kills</tspan> the process inside the container.</text>
+  <text x="80" y="192" font-size="12" fill="#0f172a">&#8226; Container exits with code <tspan font-family="Consolas, monospace" font-weight="700">137</tspan> (= 128 + SIGKILL/9).</text>
+  <text x="80" y="212" font-size="12" fill="#0f172a">&#8226; Status: <tspan font-family="Consolas, monospace" font-weight="700">Reason: OOMKilled</tspan></text>
+  <text x="80" y="232" font-size="12" fill="#0f172a">&#8226; If restartPolicy=Always: kubelet restarts; loop -&gt; CrashLoopBackOff.</text>
+  <text x="80" y="262" font-size="11" fill="#475569" font-style="italic">Memory cannot be throttled &#8212; the kernel can only deny new allocations or kill.</text>
+  <text x="80" y="282" font-size="11" font-weight="700" fill="#7f1d1d">Impact: pod restarts. Data may be lost.</text>
+
+  <!-- CPU -->
+  <text x="900" y="100" text-anchor="middle" font-size="16" font-weight="700" fill="#1e3a8a">CPU limit (compressible)</text>
+
+  <g filter="url(#sh)">
+    <rect x="620" y="120" width="540" height="180" rx="14" fill="#dbeafe" stroke="#1e40af" stroke-width="2"/>
+  </g>
+  <text x="640" y="148" font-size="13" font-weight="700" fill="#1e3a8a">If container tries to use more than CPU limit:</text>
+  <text x="640" y="172" font-size="12" fill="#0f172a">&#8226; Kernel <tspan font-weight="700">throttles</tspan> the container.</text>
+  <text x="640" y="192" font-size="12" fill="#0f172a">&#8226; Process keeps running but slows down.</text>
+  <text x="640" y="212" font-size="12" fill="#0f172a">&#8226; <tspan font-family="Consolas, monospace">cpu.stat</tspan> shows nr_throttled / throttled_time.</text>
+  <text x="640" y="232" font-size="12" fill="#0f172a">&#8226; No kill, no restart.</text>
+  <text x="640" y="262" font-size="11" fill="#475569" font-style="italic">CPU is sliced into 100ms periods; over the limit -&gt; sleep until next period.</text>
+  <text x="640" y="282" font-size="11" font-weight="700" fill="#1e3a8a">Impact: latency. App is alive but slower.</text>
+
+  <!-- Comparison -->
+  <text x="600" y="350" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">Requests vs Limits at a glance</text>
+
+  <rect x="60" y="370" width="1080" height="40" fill="#1e293b"/>
+  <text x="80" y="395" font-size="12" font-weight="700" fill="white">Aspect</text>
+  <text x="430" y="395" font-size="12" font-weight="700" fill="white">requests</text>
+  <text x="780" y="395" font-size="12" font-weight="700" fill="white">limits</text>
+
+  <g font-size="11" fill="#0f172a">
+    <rect x="60" y="410" width="1080" height="32" fill="#f1f5f9"/>
+    <text x="80" y="430">Used by</text>
+    <text x="430" y="430">scheduler</text>
+    <text x="780" y="430">kubelet (cgroups, kernel)</text>
+
+    <rect x="60" y="442" width="1080" height="32" fill="#ffffff"/>
+    <text x="80" y="462">Effect on placement</text>
+    <text x="430" y="462">determines fit on node</text>
+    <text x="780" y="462">no effect</text>
+
+    <rect x="60" y="474" width="1080" height="32" fill="#f1f5f9"/>
+    <text x="80" y="494">Effect at runtime (CPU)</text>
+    <text x="430" y="494">cgroup weight (proportional share)</text>
+    <text x="780" y="494">cgroup quota (hard cap, throttled)</text>
+
+    <rect x="60" y="506" width="1080" height="32" fill="#ffffff"/>
+    <text x="80" y="526">Effect at runtime (memory)</text>
+    <text x="430" y="526">none (informational)</text>
+    <text x="780" y="526">hard cap (OOMKill)</text>
+
+    <rect x="60" y="538" width="1080" height="32" fill="#f1f5f9"/>
+    <text x="80" y="558">Determines QoS class</text>
+    <text x="430" y="558">yes (with limits)</text>
+    <text x="780" y="558">yes (with requests)</text>
+  </g>
+</svg>

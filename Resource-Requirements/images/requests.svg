@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="3" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="600" fill="#f8fafc"/>
+  <text x="600" y="38" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">Resource Requests &#8212; What the Scheduler Reserves</text>
+  <text x="600" y="60" text-anchor="middle" font-size="13" fill="#475569">Requests = "I need at least this much" &#8226; Used for scheduling, NOT for runtime caps</text>
+
+  <!-- Node capacity bar -->
+  <text x="100" y="105" font-size="14" font-weight="700" fill="#0f172a">Node capacity: 8 CPU, 16 Gi memory</text>
+  <rect x="60" y="120" width="1080" height="60" rx="8" fill="#e2e8f0" stroke="#475569" stroke-width="1.5"/>
+
+  <!-- Pod A: 2/4Gi -->
+  <rect x="60" y="120" width="270" height="60" rx="8" fill="#3b82f6" stroke="#1e3a8a" stroke-width="1.5"/>
+  <text x="195" y="148" text-anchor="middle" font-size="12" font-weight="700" fill="white">Pod A</text>
+  <text x="195" y="166" text-anchor="middle" font-size="10" fill="#dbeafe">requests: 2 CPU, 4Gi</text>
+
+  <!-- Pod B: 1/2Gi -->
+  <rect x="330" y="120" width="135" height="60" rx="8" fill="#16a34a" stroke="#14532d" stroke-width="1.5"/>
+  <text x="397" y="148" text-anchor="middle" font-size="12" font-weight="700" fill="white">Pod B</text>
+  <text x="397" y="166" text-anchor="middle" font-size="10" fill="#dcfce7">1 CPU, 2Gi</text>
+
+  <!-- Pod C: 3/6Gi -->
+  <rect x="465" y="120" width="405" height="60" rx="8" fill="#f59e0b" stroke="#b45309" stroke-width="1.5"/>
+  <text x="667" y="148" text-anchor="middle" font-size="12" font-weight="700" fill="white">Pod C</text>
+  <text x="667" y="166" text-anchor="middle" font-size="10" fill="#fff7ed">requests: 3 CPU, 6Gi</text>
+
+  <!-- Free -->
+  <rect x="870" y="120" width="270" height="60" rx="8" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="5,4"/>
+  <text x="1005" y="155" text-anchor="middle" font-size="12" fill="#475569" font-style="italic">2 CPU, 4Gi free</text>
+
+  <text x="600" y="210" text-anchor="middle" font-size="12" fill="#0f172a"><tspan font-weight="700">Allocatable</tspan> = sum of requests so far. The scheduler tracks this per node.</text>
+  <text x="600" y="230" text-anchor="middle" font-size="11" fill="#475569" font-style="italic">A new pod fits ONLY IF its requests &#8804; remaining allocatable.</text>
+
+  <!-- Failure scenario -->
+  <text x="600" y="280" text-anchor="middle" font-size="15" font-weight="700" fill="#7f1d1d">A 3-CPU pod arrives next:</text>
+  <rect x="60" y="295" width="1080" height="40" rx="8" fill="#fee2e2" stroke="#7f1d1d" stroke-width="2"/>
+  <text x="600" y="320" text-anchor="middle" font-size="12" fill="#7f1d1d">FailedScheduling: 0/1 nodes are available: 1 Insufficient cpu (only 2 free, needed 3)</text>
+
+  <!-- Notes -->
+  <rect x="60" y="370" width="1080" height="200" rx="14" fill="#fef3c7" stroke="#854d0e" stroke-width="2"/>
+  <text x="80" y="397" font-size="14" font-weight="700" fill="#713f12">What requests do, and don't, do</text>
+  <text x="80" y="423" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">Scheduling fit check.</tspan> Sum of requests on a node must NOT exceed node allocatable.</text>
+  <text x="80" y="441" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">CPU shares (cgroup).</tspan> Container's cpu.weight is set in proportion to its CPU request.</text>
+  <text x="80" y="459" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">Eviction priority.</tspan> When the kubelet runs low on resources, BestEffort evicts first, then Burstable, last Guaranteed.</text>
+  <text x="80" y="477" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">HPA targeting.</tspan> CPU-based autoscaling computes utilization as actual / requests.</text>
+  <text x="80" y="500" font-size="12" font-weight="700" fill="#7f1d1d">Requests are NOT a runtime cap.</text>
+  <text x="80" y="518" font-size="11" fill="#0f172a">If a container uses more than its CPU request, it can &#8212; up to the LIMIT (or up to the node's free capacity if no limit).</text>
+  <text x="80" y="536" font-size="11" fill="#0f172a">Requests reserve a guarantee floor; limits set the ceiling.</text>
+  <text x="80" y="558" font-size="11" font-style="italic" fill="#0f172a">Common mistake: setting requests too high &#8220;just to be safe.&#8221; You waste capacity and prevent dense packing.</text>
+</svg>
