@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="3" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f2937"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="600" fill="#f8fafc"/>
+  <text x="600" y="38" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">Environment Variables &#8212; Five Sources</text>
+  <text x="600" y="60" text-anchor="middle" font-size="13" fill="#475569">Each ends up in the container&apos;s environment as a key=value pair</text>
+
+  <g filter="url(#sh)"><rect x="60" y="100" width="320" height="80" rx="10" fill="#3b82f6"/><text x="220" y="125" text-anchor="middle" font-size="13" font-weight="700" fill="white">1. Literal value</text><text x="80" y="148" font-size="11" font-family="Consolas, monospace" fill="white">env:</text><text x="95" y="164" font-size="11" font-family="Consolas, monospace" fill="white">- name: LOG_LEVEL</text><text x="110" y="178" font-size="11" font-family="Consolas, monospace" fill="white">value: info</text></g>
+
+  <g filter="url(#sh)"><rect x="60" y="200" width="320" height="100" rx="10" fill="#7c3aed"/><text x="220" y="225" text-anchor="middle" font-size="13" font-weight="700" fill="white">2. ConfigMap key</text><text x="80" y="248" font-size="11" font-family="Consolas, monospace" fill="white">env:</text><text x="95" y="262" font-size="11" font-family="Consolas, monospace" fill="white">- name: PORT</text><text x="110" y="276" font-size="11" font-family="Consolas, monospace" fill="white">valueFrom:</text><text x="125" y="290" font-size="11" font-family="Consolas, monospace" fill="white">configMapKeyRef:</text></g>
+
+  <g filter="url(#sh)"><rect x="60" y="320" width="320" height="100" rx="10" fill="#dc2626"/><text x="220" y="345" text-anchor="middle" font-size="13" font-weight="700" fill="white">3. Secret key</text><text x="80" y="368" font-size="11" font-family="Consolas, monospace" fill="white">env:</text><text x="95" y="382" font-size="11" font-family="Consolas, monospace" fill="white">- name: DB_PASS</text><text x="110" y="396" font-size="11" font-family="Consolas, monospace" fill="white">valueFrom:</text><text x="125" y="410" font-size="11" font-family="Consolas, monospace" fill="white">secretKeyRef:</text></g>
+
+  <g filter="url(#sh)"><rect x="60" y="440" width="320" height="100" rx="10" fill="#0d9488"/><text x="220" y="465" text-anchor="middle" font-size="13" font-weight="700" fill="white">4. Pod field (downward API)</text><text x="80" y="488" font-size="11" font-family="Consolas, monospace" fill="white">env:</text><text x="95" y="502" font-size="11" font-family="Consolas, monospace" fill="white">- name: POD_IP</text><text x="110" y="516" font-size="11" font-family="Consolas, monospace" fill="white">valueFrom:</text><text x="125" y="530" font-size="11" font-family="Consolas, monospace" fill="white">fieldRef:</text></g>
+
+  <g filter="url(#sh)"><rect x="420" y="320" width="320" height="100" rx="10" fill="#f59e0b"/><text x="580" y="345" text-anchor="middle" font-size="13" font-weight="700" fill="white">5. Resource field</text><text x="440" y="368" font-size="11" font-family="Consolas, monospace" fill="white">env:</text><text x="455" y="382" font-size="11" font-family="Consolas, monospace" fill="white">- name: CPU_LIMIT</text><text x="470" y="396" font-size="11" font-family="Consolas, monospace" fill="white">valueFrom:</text><text x="485" y="410" font-size="11" font-family="Consolas, monospace" fill="white">resourceFieldRef:</text></g>
+
+  <!-- Bulk import -->
+  <g filter="url(#sh)"><rect x="420" y="100" width="320" height="200" rx="10" fill="#0891b2"/><text x="580" y="125" text-anchor="middle" font-size="13" font-weight="700" fill="white">Bulk import: envFrom</text><text x="440" y="150" font-size="11" font-family="Consolas, monospace" fill="white">envFrom:</text><text x="455" y="166" font-size="11" font-family="Consolas, monospace" fill="white">- configMapRef:</text><text x="470" y="182" font-size="11" font-family="Consolas, monospace" fill="white">name: app-config</text><text x="455" y="200" font-size="11" font-family="Consolas, monospace" fill="white">- secretRef:</text><text x="470" y="216" font-size="11" font-family="Consolas, monospace" fill="white">name: app-secrets</text><text x="440" y="240" font-size="10" fill="#cffafe" font-style="italic">Each key in the ConfigMap or Secret</text><text x="440" y="255" font-size="10" fill="#cffafe" font-style="italic">becomes an env var with that name.</text><text x="440" y="270" font-size="10" fill="#cffafe" font-style="italic">Optional <tspan font-family="Consolas, monospace">prefix:</tspan> to namespace them.</text></g>
+
+  <!-- Container -->
+  <g filter="url(#sh)"><rect x="800" y="200" width="340" height="220" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="2"/><text x="970" y="225" text-anchor="middle" font-size="13" font-weight="700" fill="#78350f">Container environment</text><text x="820" y="255" font-size="11" font-family="Consolas, monospace" fill="#0f172a">LOG_LEVEL=info</text><text x="820" y="272" font-size="11" font-family="Consolas, monospace" fill="#0f172a">PORT=8080</text><text x="820" y="289" font-size="11" font-family="Consolas, monospace" fill="#0f172a">DB_PASS=&lt;hidden&gt;</text><text x="820" y="306" font-size="11" font-family="Consolas, monospace" fill="#0f172a">POD_IP=10.244.0.5</text><text x="820" y="323" font-size="11" font-family="Consolas, monospace" fill="#0f172a">CPU_LIMIT=500</text><text x="820" y="340" font-size="11" font-family="Consolas, monospace" fill="#0f172a">CACHE_HOST=redis...</text><text x="820" y="357" font-size="11" font-family="Consolas, monospace" fill="#0f172a">DB_USER=admin...</text><text x="820" y="375" font-size="11" font-family="Consolas, monospace" fill="#0f172a">KUBERNETES_*</text><text x="820" y="395" font-size="10" fill="#475569" font-style="italic">visible via printenv inside</text><text x="820" y="410" font-size="10" fill="#475569" font-style="italic">all read once at process start</text></g>
+
+  <line x1="385" y1="140" x2="800" y2="220" stroke="#1f2937" stroke-width="1.5" marker-end="url(#ar)" stroke-dasharray="3,2"/>
+  <line x1="385" y1="250" x2="800" y2="270" stroke="#1f2937" stroke-width="1.5" marker-end="url(#ar)" stroke-dasharray="3,2"/>
+  <line x1="385" y1="370" x2="800" y2="290" stroke="#1f2937" stroke-width="1.5" marker-end="url(#ar)" stroke-dasharray="3,2"/>
+  <line x1="385" y1="490" x2="800" y2="310" stroke="#1f2937" stroke-width="1.5" marker-end="url(#ar)" stroke-dasharray="3,2"/>
+  <line x1="745" y1="370" x2="800" y2="330" stroke="#1f2937" stroke-width="1.5" marker-end="url(#ar)" stroke-dasharray="3,2"/>
+  <line x1="745" y1="200" x2="800" y2="250" stroke="#1f2937" stroke-width="1.5" marker-end="url(#ar)" stroke-dasharray="3,2"/>
+</svg>

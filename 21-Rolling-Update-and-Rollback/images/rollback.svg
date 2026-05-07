@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="3" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f2937"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="600" fill="#f8fafc"/>
+  <text x="600" y="38" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">Rolling Update &amp; Rollback &#8212; Lifecycle</text>
+  <text x="600" y="60" text-anchor="middle" font-size="13" fill="#475569">Each template change creates a new ReplicaSet &#8226; Old ones kept per revisionHistoryLimit</text>
+
+  <!-- Timeline -->
+  <line x1="60" y1="180" x2="1140" y2="180" stroke="#475569" stroke-width="2"/>
+
+  <!-- Revision 1 -->
+  <circle cx="120" cy="180" r="10" fill="#94a3b8"/>
+  <text x="120" y="155" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Rev 1</text>
+  <text x="120" y="220" text-anchor="middle" font-size="10" font-family="Consolas, monospace" fill="#0f172a">image: v1.0</text>
+  <text x="120" y="235" text-anchor="middle" font-size="9" fill="#475569" font-style="italic">create deploy</text>
+
+  <!-- Revision 2 -->
+  <circle cx="320" cy="180" r="10" fill="#16a34a"/>
+  <text x="320" y="155" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Rev 2</text>
+  <text x="320" y="220" text-anchor="middle" font-size="10" font-family="Consolas, monospace" fill="#0f172a">image: v1.1</text>
+  <text x="320" y="235" text-anchor="middle" font-size="9" fill="#475569" font-style="italic">set image v1.1</text>
+
+  <!-- Revision 3 -->
+  <circle cx="520" cy="180" r="10" fill="#dc2626"/>
+  <text x="520" y="155" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Rev 3</text>
+  <text x="520" y="220" text-anchor="middle" font-size="10" font-family="Consolas, monospace" fill="#0f172a">image: v2.0</text>
+  <text x="520" y="235" text-anchor="middle" font-size="9" fill="#7f1d1d" font-style="italic">BAD! crashes</text>
+
+  <!-- Revision 4 (rollback) -->
+  <circle cx="720" cy="180" r="10" fill="#16a34a"/>
+  <text x="720" y="155" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Rev 4</text>
+  <text x="720" y="220" text-anchor="middle" font-size="10" font-family="Consolas, monospace" fill="#0f172a">image: v1.1</text>
+  <text x="720" y="235" text-anchor="middle" font-size="9" fill="#14532d" font-style="italic">rollout undo</text>
+
+  <!-- Revision 5 -->
+  <circle cx="920" cy="180" r="10" fill="#16a34a"/>
+  <text x="920" y="155" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Rev 5</text>
+  <text x="920" y="220" text-anchor="middle" font-size="10" font-family="Consolas, monospace" fill="#0f172a">image: v2.1</text>
+  <text x="920" y="235" text-anchor="middle" font-size="9" fill="#475569" font-style="italic">set image v2.1</text>
+
+  <!-- Curly bracket showing history kept -->
+  <path d="M 100 280 L 100 290 L 940 290 L 940 280" stroke="#7c3aed" stroke-width="2" fill="none"/>
+  <line x1="520" y1="290" x2="520" y2="300" stroke="#7c3aed" stroke-width="2"/>
+  <text x="520" y="320" text-anchor="middle" font-size="12" font-weight="700" fill="#3b0764">All revisions kept (per revisionHistoryLimit, default 10)</text>
+  <text x="520" y="338" text-anchor="middle" font-size="11" fill="#0f172a">Each is a ReplicaSet object with replicas=0 (except current)</text>
+
+  <!-- ReplicaSets -->
+  <text x="60" y="380" font-size="13" font-weight="700" fill="#0f172a">ReplicaSets in the cluster (after Rev 5):</text>
+  <rect x="60" y="395" width="1080" height="40" fill="#1e293b"/>
+  <text x="80" y="420" font-size="11" font-weight="700" fill="white">Name</text>
+  <text x="380" y="420" font-size="11" font-weight="700" fill="white">Image</text>
+  <text x="700" y="420" font-size="11" font-weight="700" fill="white">Replicas</text>
+  <text x="930" y="420" font-size="11" font-weight="700" fill="white">Revision</text>
+
+  <g font-size="11" fill="#0f172a">
+    <rect x="60" y="435" width="1080" height="28" fill="#f1f5f9"/>
+    <text x="80" y="453" font-family="Consolas, monospace">web-aaaaa</text>
+    <text x="380" y="453" font-family="Consolas, monospace">app:v1.0</text>
+    <text x="700" y="453">0</text>
+    <text x="930" y="453">1</text>
+
+    <rect x="60" y="463" width="1080" height="28" fill="#ffffff"/>
+    <text x="80" y="481" font-family="Consolas, monospace">web-bbbbb</text>
+    <text x="380" y="481" font-family="Consolas, monospace">app:v1.1</text>
+    <text x="700" y="481">0</text>
+    <text x="930" y="481">2 &amp; 4 (reused)</text>
+
+    <rect x="60" y="491" width="1080" height="28" fill="#f1f5f9"/>
+    <text x="80" y="509" font-family="Consolas, monospace">web-ccccc</text>
+    <text x="380" y="509" font-family="Consolas, monospace">app:v2.0</text>
+    <text x="700" y="509">0</text>
+    <text x="930" y="509">3</text>
+
+    <rect x="60" y="519" width="1080" height="28" fill="#ffffff"/>
+    <text x="80" y="537" font-family="Consolas, monospace">web-ddddd</text>
+    <text x="380" y="537" font-family="Consolas, monospace">app:v2.1</text>
+    <text x="700" y="537">3 (active)</text>
+    <text x="930" y="537">5</text>
+  </g>
+
+  <text x="60" y="575" font-size="11" fill="#475569" font-style="italic">Note: when you rollback, K8s reuses the existing RS with that template &#8212; doesn&apos;t create a new one. The revision number increments though.</text>
+</svg>

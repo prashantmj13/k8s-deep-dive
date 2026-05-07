@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="3" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f2937"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="600" fill="#f8fafc"/>
+  <text x="600" y="38" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">Configuring Applications &#8212; Five Levers</text>
+  <text x="600" y="60" text-anchor="middle" font-size="13" fill="#475569">From bare command-line args to ConfigMaps and Secrets &#8212; pick the right tool for the data</text>
+
+  <!-- Pod in middle -->
+  <g filter="url(#sh)">
+    <rect x="450" y="220" width="300" height="180" rx="14" fill="#fef3c7" stroke="#b45309" stroke-width="2.5"/>
+    <text x="600" y="250" text-anchor="middle" font-size="15" font-weight="700" fill="#78350f">Pod / Container</text>
+    <text x="600" y="280" text-anchor="middle" font-size="11" fill="#0f172a">your app, expecting:</text>
+    <text x="600" y="305" text-anchor="middle" font-size="10" font-family="Consolas, monospace" fill="#0f172a">ENV vars, args, files</text>
+    <text x="600" y="345" text-anchor="middle" font-size="11" fill="#475569" font-style="italic">All five mechanisms below</text>
+    <text x="600" y="362" text-anchor="middle" font-size="11" fill="#475569" font-style="italic">end up here in some form</text>
+  </g>
+
+  <!-- 5 sources -->
+  <g filter="url(#sh)"><rect x="60" y="100" width="240" height="80" rx="10" fill="#3b82f6"/><text x="180" y="130" text-anchor="middle" font-size="13" font-weight="700" fill="white">Command &amp; Args</text><text x="180" y="150" text-anchor="middle" font-size="10" fill="#dbeafe">spec.containers[].command</text><text x="180" y="166" text-anchor="middle" font-size="10" fill="#dbeafe">spec.containers[].args</text></g>
+  <line x1="305" y1="180" x2="445" y2="240" stroke="#1f2937" stroke-width="2" marker-end="url(#ar)"/>
+
+  <g filter="url(#sh)"><rect x="60" y="200" width="240" height="80" rx="10" fill="#16a34a"/><text x="180" y="230" text-anchor="middle" font-size="13" font-weight="700" fill="white">Environment Variables</text><text x="180" y="250" text-anchor="middle" font-size="10" fill="#dcfce7">spec.containers[].env</text><text x="180" y="266" text-anchor="middle" font-size="10" fill="#dcfce7">literal or from sources</text></g>
+  <line x1="305" y1="240" x2="445" y2="280" stroke="#1f2937" stroke-width="2" marker-end="url(#ar)"/>
+
+  <g filter="url(#sh)"><rect x="60" y="300" width="240" height="80" rx="10" fill="#7c3aed"/><text x="180" y="330" text-anchor="middle" font-size="13" font-weight="700" fill="white">ConfigMap</text><text x="180" y="350" text-anchor="middle" font-size="10" fill="#ede9fe">non-secret config files</text><text x="180" y="366" text-anchor="middle" font-size="10" fill="#ede9fe">env vars, mounts</text></g>
+  <line x1="305" y1="340" x2="445" y2="320" stroke="#1f2937" stroke-width="2" marker-end="url(#ar)"/>
+
+  <g filter="url(#sh)"><rect x="900" y="200" width="240" height="80" rx="10" fill="#dc2626"/><text x="1020" y="230" text-anchor="middle" font-size="13" font-weight="700" fill="white">Secret</text><text x="1020" y="250" text-anchor="middle" font-size="10" fill="#fee2e2">passwords, tokens, keys</text><text x="1020" y="266" text-anchor="middle" font-size="10" fill="#fee2e2">env vars, mounts</text></g>
+  <line x1="895" y1="240" x2="755" y2="280" stroke="#1f2937" stroke-width="2" marker-end="url(#ar)"/>
+
+  <g filter="url(#sh)"><rect x="900" y="300" width="240" height="80" rx="10" fill="#0891b2"/><text x="1020" y="330" text-anchor="middle" font-size="13" font-weight="700" fill="white">Volumes</text><text x="1020" y="350" text-anchor="middle" font-size="10" fill="#cffafe">PV/PVC, hostPath,</text><text x="1020" y="366" text-anchor="middle" font-size="10" fill="#cffafe">downwardAPI, projected</text></g>
+  <line x1="895" y1="340" x2="755" y2="320" stroke="#1f2937" stroke-width="2" marker-end="url(#ar)"/>
+
+  <!-- Decision guide -->
+  <rect x="60" y="430" width="1080" height="160" rx="14" fill="#dbeafe" stroke="#1e40af" stroke-width="2"/>
+  <text x="80" y="458" font-size="14" font-weight="700" fill="#1e3a8a">Decision guide &#8212; which lever to use</text>
+  <text x="80" y="482" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">A few simple values that change rarely</tspan> &#8594; environment variables (<tspan font-family="Consolas, monospace">env</tspan>)</text>
+  <text x="80" y="500" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">Multiple values OR a config file</tspan> &#8594; ConfigMap (mount as file or read as env)</text>
+  <text x="80" y="518" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">Anything sensitive</tspan> (passwords, API keys, certs) &#8594; Secret (encoded, encrypted at rest if etcd is configured)</text>
+  <text x="80" y="536" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">Override the image&apos;s entrypoint</tspan> &#8594; <tspan font-family="Consolas, monospace">command</tspan>; <tspan font-weight="700">override the args only</tspan> &#8594; <tspan font-family="Consolas, monospace">args</tspan></text>
+  <text x="80" y="554" font-size="11" fill="#0f172a">&#8226; <tspan font-weight="700">Need a writable scratch dir or persistent storage</tspan> &#8594; volumes (PV/PVC, emptyDir)</text>
+  <text x="80" y="578" font-size="11" font-weight="700" fill="#1e3a8a">Mix and match. A typical app uses: env + ConfigMap (settings file) + Secret (DB password) + Volume (cache).</text>
+</svg>
