@@ -1,0 +1,15 @@
+<svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="300" fill="#0d1117"/>
+  <text x="400" y="32" text-anchor="middle" fill="#58a6ff" font-size="18">etcd Backup and Restore</text>
+  <rect x="30" y="60" width="200" height="80" rx="8" fill="#1f3a5f" stroke="#58a6ff" stroke-width="2"/>
+  <text x="130" y="105" text-anchor="middle" fill="#58a6ff" font-size="13">Running etcd</text>
+  <rect x="300" y="60" width="200" height="80" rx="8" fill="#1a3a2a" stroke="#3fb950" stroke-width="2"/>
+  <text x="400" y="105" text-anchor="middle" fill="#3fb950" font-size="13">Snapshot File</text>
+  <rect x="570" y="60" width="200" height="80" rx="8" fill="#2d1f5f" stroke="#d2a8ff" stroke-width="2"/>
+  <text x="670" y="105" text-anchor="middle" fill="#d2a8ff" font-size="13">Restored Dir</text>
+  <line x1="230" y1="100" x2="300" y2="100" stroke="#3fb950" stroke-width="2"/>
+  <line x1="500" y1="100" x2="570" y2="100" stroke="#d2a8ff" stroke-width="2"/>
+  <text x="265" y="92" text-anchor="middle" fill="#3fb950" font-size="10">SAVE</text>
+  <text x="535" y="92" text-anchor="middle" fill="#d2a8ff" font-size="10">RESTORE</text>
+  <text x="400" y="200" text-anchor="middle" fill="#8b949e" font-size="11">1.Stop API server 2.Restore snapshot 3.Update etcd.yaml 4.Start API server</text>
+</svg>

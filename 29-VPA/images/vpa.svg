@@ -1,0 +1,64 @@
+<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" font-family="monospace">
+  <rect width="800" height="400" fill="#0d1117"/>
+  <text x="400" y="35" text-anchor="middle" fill="#58a6ff" font-size="18" font-weight="bold">Vertical Pod Autoscaler (VPA)</text>
+
+  <rect x="30" y="60" width="160" height="70" rx="8" fill="#1f3a5f" stroke="#58a6ff" stroke-width="2"/>
+  <text x="110" y="90" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="bold">VPA Recommender</text>
+  <text x="110" y="108" text-anchor="middle" fill="#8b949e" font-size="10">reads metrics history</text>
+  <text x="110" y="122" text-anchor="middle" fill="#8b949e" font-size="10">generates recommendations</text>
+
+  <rect x="320" y="60" width="160" height="70" rx="8" fill="#2d1f5f" stroke="#d2a8ff" stroke-width="2"/>
+  <text x="400" y="90" text-anchor="middle" fill="#d2a8ff" font-size="12" font-weight="bold">VPA Updater</text>
+  <text x="400" y="108" text-anchor="middle" fill="#8b949e" font-size="10">evicts pods needing</text>
+  <text x="400" y="122" text-anchor="middle" fill="#8b949e" font-size="10">resource changes</text>
+
+  <rect x="610" y="60" width="160" height="70" rx="8" fill="#3a2a10" stroke="#f0883e" stroke-width="2"/>
+  <text x="690" y="85" text-anchor="middle" fill="#f0883e" font-size="12" font-weight="bold">VPA Admission</text>
+  <text x="690" y="100" text-anchor="middle" fill="#f0883e" font-size="12" font-weight="bold">Controller</text>
+  <text x="690" y="118" text-anchor="middle" fill="#8b949e" font-size="10">sets requests on</text>
+  <text x="690" y="130" text-anchor="middle" fill="#8b949e" font-size="10">new pods</text>
+
+  <line x1="190" y1="95" x2="320" y2="95" stroke="#58a6ff" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#av)"/>
+  <text x="255" y="87" text-anchor="middle" fill="#8b949e" font-size="9">recommendations</text>
+  <line x1="480" y1="95" x2="610" y2="95" stroke="#d2a8ff" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#av2)"/>
+  <text x="545" y="87" text-anchor="middle" fill="#8b949e" font-size="9">pod evicted → new pod</text>
+
+  <!-- Modes table -->
+  <rect x="30" y="165" width="740" height="160" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="400" y="188" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="bold">VPA Update Modes</text>
+
+  <rect x="50" y="198" width="155" height="110" rx="6" fill="#1f3a5f" stroke="#58a6ff" stroke-width="1"/>
+  <text x="127" y="220" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="bold">Off</text>
+  <text x="127" y="240" text-anchor="middle" fill="#8b949e" font-size="10">Recommendations</text>
+  <text x="127" y="256" text-anchor="middle" fill="#8b949e" font-size="10">only. No changes</text>
+  <text x="127" y="272" text-anchor="middle" fill="#8b949e" font-size="10">to pods.</text>
+  <text x="127" y="295" text-anchor="middle" fill="#3fb950" font-size="10">✓ Safe to start with</text>
+
+  <rect x="220" y="198" width="155" height="110" rx="6" fill="#1f3a2a" stroke="#3fb950" stroke-width="1"/>
+  <text x="297" y="220" text-anchor="middle" fill="#3fb950" font-size="12" font-weight="bold">Initial</text>
+  <text x="297" y="240" text-anchor="middle" fill="#8b949e" font-size="10">Apply on pod</text>
+  <text x="297" y="256" text-anchor="middle" fill="#8b949e" font-size="10">creation only.</text>
+  <text x="297" y="272" text-anchor="middle" fill="#8b949e" font-size="10">No evictions.</text>
+  <text x="297" y="295" text-anchor="middle" fill="#3fb950" font-size="10">✓ No disruption</text>
+
+  <rect x="390" y="198" width="155" height="110" rx="6" fill="#2d1f5f" stroke="#d2a8ff" stroke-width="1"/>
+  <text x="467" y="220" text-anchor="middle" fill="#d2a8ff" font-size="12" font-weight="bold">Auto</text>
+  <text x="467" y="240" text-anchor="middle" fill="#8b949e" font-size="10">Evicts + recreates</text>
+  <text x="467" y="256" text-anchor="middle" fill="#8b949e" font-size="10">pods automatically.</text>
+  <text x="467" y="272" text-anchor="middle" fill="#8b949e" font-size="10">Full automation.</text>
+  <text x="467" y="295" text-anchor="middle" fill="#f0883e" font-size="10">⚡ Pod disruption</text>
+
+  <rect x="560" y="198" width="185" height="110" rx="6" fill="#3a1a1a" stroke="#f85149" stroke-width="1"/>
+  <text x="652" y="220" text-anchor="middle" fill="#f85149" font-size="12" font-weight="bold">Recreate</text>
+  <text x="652" y="240" text-anchor="middle" fill="#8b949e" font-size="10">Always recreates</text>
+  <text x="652" y="256" text-anchor="middle" fill="#8b949e" font-size="10">pods. Legacy mode.</text>
+  <text x="652" y="272" text-anchor="middle" fill="#8b949e" font-size="10">Use Auto instead.</text>
+  <text x="652" y="295" text-anchor="middle" fill="#f85149" font-size="10">⚠ More disruptive</text>
+
+  <text x="400" y="360" text-anchor="middle" fill="#8b949e" font-size="11">⚠ Do NOT use VPA + HPA both on CPU — they conflict. Use VPA memory + HPA CPU.</text>
+
+  <defs>
+    <marker id="av" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#58a6ff"/></marker>
+    <marker id="av2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#d2a8ff"/></marker>
+  </defs>
+</svg>

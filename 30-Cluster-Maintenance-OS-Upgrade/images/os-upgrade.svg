@@ -1,0 +1,53 @@
+<svg viewBox="0 0 800 360" xmlns="http://www.w3.org/2000/svg" font-family="monospace">
+  <rect width="800" height="360" fill="#0d1117"/>
+  <text x="400" y="32" text-anchor="middle" fill="#58a6ff" font-size="18" font-weight="bold">OS Upgrade: Node Maintenance Flow</text>
+
+  <!-- Steps -->
+  <rect x="30" y="55" width="150" height="80" rx="8" fill="#1f3a5f" stroke="#58a6ff" stroke-width="2"/>
+  <text x="105" y="82" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="bold">1. Cordon</text>
+  <text x="105" y="100" text-anchor="middle" fill="#8b949e" font-size="10">kubectl cordon</text>
+  <text x="105" y="116" text-anchor="middle" fill="#8b949e" font-size="10">node01</text>
+  <text x="105" y="130" text-anchor="middle" fill="#f0883e" font-size="10">No new pods</text>
+
+  <text x="200" y="98" text-anchor="middle" fill="#58a6ff" font-size="20">→</text>
+
+  <rect x="215" y="55" width="150" height="80" rx="8" fill="#1f3a5f" stroke="#58a6ff" stroke-width="2"/>
+  <text x="290" y="82" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="bold">2. Drain</text>
+  <text x="290" y="100" text-anchor="middle" fill="#8b949e" font-size="10">kubectl drain</text>
+  <text x="290" y="116" text-anchor="middle" fill="#8b949e" font-size="10">--ignore-daemonsets</text>
+  <text x="290" y="130" text-anchor="middle" fill="#f85149" font-size="10">Pods evicted</text>
+
+  <text x="385" y="98" text-anchor="middle" fill="#58a6ff" font-size="20">→</text>
+
+  <rect x="400" y="55" width="150" height="80" rx="8" fill="#2d1f3a" stroke="#d2a8ff" stroke-width="2"/>
+  <text x="475" y="82" text-anchor="middle" fill="#d2a8ff" font-size="12" font-weight="bold">3. Upgrade</text>
+  <text x="475" y="100" text-anchor="middle" fill="#8b949e" font-size="10">apt upgrade</text>
+  <text x="475" y="116" text-anchor="middle" fill="#8b949e" font-size="10">+ reboot</text>
+  <text x="475" y="130" text-anchor="middle" fill="#d2a8ff" font-size="10">Node offline</text>
+
+  <text x="570" y="98" text-anchor="middle" fill="#58a6ff" font-size="20">→</text>
+
+  <rect x="585" y="55" width="180" height="80" rx="8" fill="#1a3a2a" stroke="#3fb950" stroke-width="2"/>
+  <text x="675" y="82" text-anchor="middle" fill="#3fb950" font-size="12" font-weight="bold">4. Uncordon</text>
+  <text x="675" y="100" text-anchor="middle" fill="#8b949e" font-size="10">kubectl uncordon</text>
+  <text x="675" y="116" text-anchor="middle" fill="#8b949e" font-size="10">node01</text>
+  <text x="675" y="130" text-anchor="middle" fill="#3fb950" font-size="10">Node Ready ✓</text>
+
+  <!-- Node states -->
+  <rect x="30" y="165" width="740" height="160" rx="8" fill="#161b22" stroke="#30363d"/>
+  <text x="400" y="188" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="bold">What Happens to Each Pod Type During Drain</text>
+
+  <text x="60" y="215" fill="#3fb950" font-size="11">✓ Deployment/RS Pod</text>
+  <text x="60" y="233" fill="#8b949e" font-size="10">  Evicted → rescheduled on another node</text>
+
+  <text x="60" y="258" fill="#f0883e" font-size="11">⊘ DaemonSet Pod</text>
+  <text x="60" y="276" fill="#8b949e" font-size="10">  Skipped (use --ignore-daemonsets)</text>
+
+  <text x="400" y="215" fill="#f85149" font-size="11">✗ Bare Pod (no controller)</text>
+  <text x="400" y="233" fill="#8b949e" font-size="10">  Evicted → NOT rescheduled (data lost)</text>
+
+  <text x="400" y="258" fill="#d2a8ff" font-size="11">⊘ Static Pod</text>
+  <text x="400" y="276" fill="#8b949e" font-size="10">  Cannot be evicted — remains on node</text>
+
+  <text x="400" y="315" text-anchor="middle" fill="#8b949e" font-size="11">pod-eviction-timeout default: 5 minutes — node must return within this window to avoid pod eviction</text>
+</svg>
