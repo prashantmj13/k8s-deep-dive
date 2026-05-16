@@ -1,0 +1,37 @@
+<svg viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg" font-family="monospace">
+<rect width="820" height="400" fill="#0d1117"/>
+<text x="410" y="30" text-anchor="middle" fill="#58a6ff" font-size="17" font-weight="bold">Ingress Controller Routing</text>
+<rect x="20" y="50" width="110" height="60" rx="8" fill="#2d1f5f" stroke="#d2a8ff" stroke-width="2"/>
+<text x="75" y="78" text-anchor="middle" fill="#d2a8ff" font-size="12" font-weight="bold">Internet</text>
+<text x="75" y="98" text-anchor="middle" fill="#8b949e" font-size="10">Client</text>
+<line x1="130" y1="80" x2="170" y2="80" stroke="#d2a8ff" stroke-width="2"/>
+<rect x="170" y="50" width="140" height="60" rx="8" fill="#1f3a5f" stroke="#58a6ff" stroke-width="2"/>
+<text x="240" y="73" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="bold">LoadBalancer</text>
+<text x="240" y="91" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="bold">Service (1 only)</text>
+<line x1="310" y1="80" x2="350" y2="80" stroke="#58a6ff" stroke-width="2"/>
+<rect x="350" y="40" width="160" height="280" rx="8" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+<text x="430" y="65" text-anchor="middle" fill="#3fb950" font-size="12" font-weight="bold">Ingress</text>
+<text x="430" y="83" text-anchor="middle" fill="#3fb950" font-size="12" font-weight="bold">Controller</text>
+<text x="430" y="105" text-anchor="middle" fill="#8b949e" font-size="10">Reads Ingress rules:</text>
+<rect x="360" y="115" width="140" height="30" rx="4" fill="#1f3a5f" stroke="#58a6ff" stroke-width="1"/>
+<text x="430" y="135" text-anchor="middle" fill="#8b949e" font-size="10">app.example.com/</text>
+<rect x="360" y="152" width="140" height="30" rx="4" fill="#1f3a5f" stroke="#58a6ff" stroke-width="1"/>
+<text x="430" y="172" text-anchor="middle" fill="#8b949e" font-size="10">api.example.com/</text>
+<rect x="360" y="189" width="140" height="30" rx="4" fill="#1f3a5f" stroke="#58a6ff" stroke-width="1"/>
+<text x="430" y="209" text-anchor="middle" fill="#8b949e" font-size="10">example.com/admin</text>
+<line x1="510" y1="130" x2="570" y2="130" stroke="#3fb950" stroke-width="2"/>
+<line x1="510" y1="167" x2="570" y2="200" stroke="#3fb950" stroke-width="2"/>
+<line x1="510" y1="204" x2="570" y2="260" stroke="#3fb950" stroke-width="2"/>
+<rect x="570" y="105" width="150" height="50" rx="6" fill="#1a3a2a" stroke="#3fb950" stroke-width="1"/>
+<text x="645" y="128" text-anchor="middle" fill="#3fb950" font-size="11" font-weight="bold">frontend-svc</text>
+<text x="645" y="146" text-anchor="middle" fill="#8b949e" font-size="10">port 80</text>
+<rect x="570" y="175" width="150" height="50" rx="6" fill="#1a3a2a" stroke="#3fb950" stroke-width="1"/>
+<text x="645" y="198" text-anchor="middle" fill="#3fb950" font-size="11" font-weight="bold">api-svc</text>
+<text x="645" y="216" text-anchor="middle" fill="#8b949e" font-size="10">port 8080</text>
+<rect x="570" y="235" width="150" height="50" rx="6" fill="#1a3a2a" stroke="#3fb950" stroke-width="1"/>
+<text x="645" y="258" text-anchor="middle" fill="#3fb950" font-size="11" font-weight="bold">admin-svc</text>
+<text x="645" y="276" text-anchor="middle" fill="#8b949e" font-size="10">port 3000</text>
+<rect x="20" y="345" width="780" height="40" rx="6" fill="#161b22" stroke="#30363d"/>
+<text x="410" y="362" text-anchor="middle" fill="#3fb950" font-size="10">1 LoadBalancer + Ingress = route to unlimited services (vs 1 LB per service = $$$)</text>
+<text x="410" y="378" text-anchor="middle" fill="#8b949e" font-size="10">TLS termination, path rewriting, host routing, rate limiting — all handled by the controller</text>
+</svg>

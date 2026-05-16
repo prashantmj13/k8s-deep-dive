@@ -1,0 +1,38 @@
+<svg viewBox="0 0 820 420" xmlns="http://www.w3.org/2000/svg" font-family="monospace">
+<rect width="820" height="420" fill="#0d1117"/>
+<text x="410" y="30" text-anchor="middle" fill="#58a6ff" font-size="17" font-weight="bold">Kubernetes Service Types</text>
+<rect x="20" y="48" width="240" height="340" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1"/>
+<text x="140" y="72" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="bold">ClusterIP</text>
+<text x="140" y="90" text-anchor="middle" fill="#8b949e" font-size="10">Internal only</text>
+<rect x="35" y="100" width="210" height="50" rx="5" fill="#1f3a5f" stroke="#58a6ff" stroke-width="1"/>
+<text x="140" y="122" text-anchor="middle" fill="#8b949e" font-size="10">Pod A ──→ ClusterIP:80</text>
+<text x="140" y="140" text-anchor="middle" fill="#3fb950" font-size="10">──→ Pod B:8080</text>
+<text x="140" y="175" text-anchor="middle" fill="#8b949e" font-size="10">port: 80</text>
+<text x="140" y="193" text-anchor="middle" fill="#8b949e" font-size="10">targetPort: 8080</text>
+<text x="140" y="215" text-anchor="middle" fill="#f85149" font-size="10">No external access</text>
+<text x="140" y="235" text-anchor="middle" fill="#3fb950" font-size="10">Default service type</text>
+<rect x="295" y="48" width="240" height="340" rx="8" fill="#161b22" stroke="#f0883e" stroke-width="1"/>
+<text x="415" y="72" text-anchor="middle" fill="#f0883e" font-size="12" font-weight="bold">NodePort</text>
+<text x="415" y="90" text-anchor="middle" fill="#8b949e" font-size="10">Via node IP</text>
+<rect x="310" y="100" width="210" height="50" rx="5" fill="#3a2010" stroke="#f0883e" stroke-width="1"/>
+<text x="415" y="122" text-anchor="middle" fill="#8b949e" font-size="10">Client ──→ NodeIP:30080</text>
+<text x="415" y="140" text-anchor="middle" fill="#3fb950" font-size="10">──→ ClusterIP:80 ──→ Pod</text>
+<text x="415" y="175" text-anchor="middle" fill="#8b949e" font-size="10">port: 80</text>
+<text x="415" y="193" text-anchor="middle" fill="#8b949e" font-size="10">targetPort: 8080</text>
+<text x="415" y="211" text-anchor="middle" fill="#f0883e" font-size="10">nodePort: 30080</text>
+<text x="415" y="233" text-anchor="middle" fill="#8b949e" font-size="10">Range: 30000-32767</text>
+<text x="415" y="253" text-anchor="middle" fill="#3fb950" font-size="10">Dev/test, bare-metal</text>
+<rect x="560" y="48" width="240" height="340" rx="8" fill="#161b22" stroke="#3fb950" stroke-width="1"/>
+<text x="680" y="72" text-anchor="middle" fill="#3fb950" font-size="12" font-weight="bold">LoadBalancer</text>
+<text x="680" y="90" text-anchor="middle" fill="#8b949e" font-size="10">Via cloud LB</text>
+<rect x="575" y="100" width="210" height="50" rx="5" fill="#1a3a2a" stroke="#3fb950" stroke-width="1"/>
+<text x="680" y="122" text-anchor="middle" fill="#8b949e" font-size="10">Internet ──→ LB-IP:80</text>
+<text x="680" y="140" text-anchor="middle" fill="#3fb950" font-size="10">──→ NodePort ──→ Pod</text>
+<text x="680" y="175" text-anchor="middle" fill="#8b949e" font-size="10">port: 80</text>
+<text x="680" y="193" text-anchor="middle" fill="#8b949e" font-size="10">targetPort: 8080</text>
+<text x="680" y="211" text-anchor="middle" fill="#3fb950" font-size="10">EXTERNAL-IP: auto-assigned</text>
+<text x="680" y="231" text-anchor="middle" fill="#8b949e" font-size="10">GKE/EKS/AKS: cloud LB</text>
+<text x="680" y="251" text-anchor="middle" fill="#8b949e" font-size="10">Bare-metal: MetalLB</text>
+<rect x="20" y="370" width="780" height="35" rx="6" fill="#161b22" stroke="#30363d"/>
+<text x="410" y="392" text-anchor="middle" fill="#8b949e" font-size="10">kube-proxy on every node programs iptables/IPVS rules to implement Service routing</text>
+</svg>

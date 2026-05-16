@@ -1,0 +1,33 @@
+<svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg" font-family="monospace">
+<rect width="820" height="380" fill="#0d1117"/>
+<text x="410" y="30" text-anchor="middle" fill="#58a6ff" font-size="17" font-weight="bold">CoreDNS Resolution Flow</text>
+<rect x="20" y="50" width="130" height="60" rx="8" fill="#2d1f5f" stroke="#d2a8ff" stroke-width="2"/>
+<text x="85" y="78" text-anchor="middle" fill="#d2a8ff" font-size="12" font-weight="bold">Pod</text>
+<text x="85" y="98" text-anchor="middle" fill="#8b949e" font-size="10">queries "backend-svc"</text>
+<line x1="150" y1="80" x2="195" y2="80" stroke="#d2a8ff" stroke-width="2"/>
+<rect x="195" y="50" width="170" height="60" rx="8" fill="#1f3a5f" stroke="#58a6ff" stroke-width="2"/>
+<text x="280" y="73" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="bold">CoreDNS</text>
+<text x="280" y="91" text-anchor="middle" fill="#8b949e" font-size="10">10.96.0.10:53</text>
+<line x1="365" y1="80" x2="415" y2="80" stroke="#3fb950" stroke-width="2"/>
+<rect x="415" y="50" width="200" height="60" rx="8" fill="#1a3a2a" stroke="#3fb950" stroke-width="2"/>
+<text x="515" y="73" text-anchor="middle" fill="#3fb950" font-size="12" font-weight="bold">Service ClusterIP</text>
+<text x="515" y="93" text-anchor="middle" fill="#8b949e" font-size="10">backend-svc → 10.96.100.50</text>
+<line x1="280" y1="110" x2="280" y2="150" stroke="#f0883e" stroke-width="1" stroke-dasharray="4,3"/>
+<rect x="195" y="150" width="170" height="60" rx="8" fill="#3a2010" stroke="#f0883e" stroke-width="1"/>
+<text x="280" y="173" text-anchor="middle" fill="#f0883e" font-size="11">External query?</text>
+<text x="280" y="193" text-anchor="middle" fill="#8b949e" font-size="10">google.com</text>
+<line x1="365" y1="180" x2="415" y2="180" stroke="#f0883e" stroke-width="1" stroke-dasharray="4,3"/>
+<rect x="415" y="150" width="200" height="60" rx="8" fill="#3a2010" stroke="#f0883e" stroke-width="1"/>
+<text x="515" y="178" text-anchor="middle" fill="#f0883e" font-size="11">Upstream DNS</text>
+<text x="515" y="196" text-anchor="middle" fill="#8b949e" font-size="10">forward . /etc/resolv.conf</text>
+<rect x="20" y="240" width="780" height="120" rx="8" fill="#161b22" stroke="#30363d"/>
+<text x="410" y="263" text-anchor="middle" fill="#e6edf3" font-size="12" font-weight="bold">DNS Name Formats</text>
+<text x="70" y="287" fill="#3fb950" font-size="11" font-weight="bold">Short (same NS):</text>
+<text x="70" y="305" fill="#8b949e" font-size="11">nginx-svc</text>
+<text x="270" y="287" fill="#58a6ff" font-size="11" font-weight="bold">Namespace:</text>
+<text x="270" y="305" fill="#8b949e" font-size="11">nginx-svc.default</text>
+<text x="470" y="287" fill="#d2a8ff" font-size="11" font-weight="bold">FQDN (always works):</text>
+<text x="470" y="305" fill="#8b949e" font-size="11">nginx-svc.default.svc.cluster.local</text>
+<text x="70" y="335" fill="#8b949e" font-size="10">resolv.conf search: default.svc.cluster.local  svc.cluster.local  cluster.local</text>
+<text x="70" y="353" fill="#8b949e" font-size="10">Short names work because search domains are appended automatically</text>
+</svg>
