@@ -1,0 +1,80 @@
+<svg viewBox="0 0 820 460" xmlns="http://www.w3.org/2000/svg" font-family="monospace">
+<rect width="820" height="460" fill="#0d1117"/>
+<text x="410" y="32" text-anchor="middle" fill="#58a6ff" font-size="18" font-weight="bold">Container Probes: Lifecycle and Actions</text>
+
+<!-- Timeline bar -->
+<rect x="30" y="55" width="760" height="40" rx="6" fill="#161b22" stroke="#30363d"/>
+<text x="40" y="80" fill="#8b949e" font-size="10">Container starts</text>
+<rect x="155" y="58" width="180" height="34" rx="4" fill="#3a2010" stroke="#f0883e" stroke-width="2"/>
+<text x="245" y="80" text-anchor="middle" fill="#f0883e" font-size="11" font-weight="bold">startupProbe running</text>
+<rect x="340" y="58" width="200" height="34" rx="4" fill="#1f3a5f" stroke="#58a6ff" stroke-width="2"/>
+<text x="440" y="80" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="bold">liveness + readiness active</text>
+<text x="547" y="80" fill="#3fb950" font-size="10">  → ongoing</text>
+<line x1="335" y1="75" x2="340" y2="75" stroke="#3fb950" stroke-width="2"/>
+<text x="245" y="48" text-anchor="middle" fill="#f0883e" font-size="9">liveness + readiness SUSPENDED</text>
+
+<!-- Three probe boxes -->
+<!-- Startup -->
+<rect x="20" y="115" width="240" height="175" rx="8" fill="#161b22" stroke="#f0883e" stroke-width="2"/>
+<text x="140" y="140" text-anchor="middle" fill="#f0883e" font-size="13" font-weight="bold">startupProbe</text>
+<text x="140" y="158" text-anchor="middle" fill="#8b949e" font-size="10">Has the app finished starting?</text>
+<rect x="35" y="168" width="210" height="28" rx="4" fill="#3a2010" stroke="#f0883e" stroke-width="1"/>
+<text x="140" y="187" text-anchor="middle" fill="#f0883e" font-size="10">On FAIL: container killed</text>
+<rect x="35" y="202" width="210" height="28" rx="4" fill="#1a3a2a" stroke="#3fb950" stroke-width="1"/>
+<text x="140" y="221" text-anchor="middle" fill="#3fb950" font-size="10">On PASS: hands off to liveness</text>
+<text x="140" y="248" text-anchor="middle" fill="#8b949e" font-size="9">failureThreshold × periodSeconds</text>
+<text x="140" y="264" text-anchor="middle" fill="#8b949e" font-size="9">= max startup window</text>
+<text x="140" y="280" text-anchor="middle" fill="#f0883e" font-size="9">Replaces initialDelaySeconds</text>
+
+<!-- Liveness -->
+<rect x="290" y="115" width="240" height="175" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+<text x="410" y="140" text-anchor="middle" fill="#58a6ff" font-size="13" font-weight="bold">livenessProbe</text>
+<text x="410" y="158" text-anchor="middle" fill="#8b949e" font-size="10">Is the app alive? Is it stuck?</text>
+<rect x="305" y="168" width="210" height="28" rx="4" fill="#3a1a1a" stroke="#f85149" stroke-width="1"/>
+<text x="410" y="187" text-anchor="middle" fill="#f85149" font-size="10">On FAIL: container RESTARTED</text>
+<rect x="305" y="202" width="210" height="28" rx="4" fill="#1a3a2a" stroke="#3fb950" stroke-width="1"/>
+<text x="410" y="221" text-anchor="middle" fill="#3fb950" font-size="10">On PASS: container keeps running</text>
+<text x="410" y="252" text-anchor="middle" fill="#8b949e" font-size="9">Check: app internals only</text>
+<text x="410" y="268" text-anchor="middle" fill="#f85149" font-size="9">NOT external DBs — cascade risk!</text>
+<text x="410" y="284" text-anchor="middle" fill="#8b949e" font-size="9">successThreshold must be 1</text>
+
+<!-- Readiness -->
+<rect x="560" y="115" width="240" height="175" rx="8" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+<text x="680" y="140" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="bold">readinessProbe</text>
+<text x="680" y="158" text-anchor="middle" fill="#8b949e" font-size="10">Is the app ready for traffic?</text>
+<rect x="575" y="168" width="210" height="28" rx="4" fill="#3a2010" stroke="#f0883e" stroke-width="1"/>
+<text x="680" y="187" text-anchor="middle" fill="#f0883e" font-size="10">On FAIL: removed from endpoints</text>
+<rect x="575" y="202" width="210" height="28" rx="4" fill="#1a3a2a" stroke="#3fb950" stroke-width="1"/>
+<text x="680" y="221" text-anchor="middle" fill="#3fb950" font-size="10">On PASS: added to endpoints</text>
+<text x="680" y="252" text-anchor="middle" fill="#8b949e" font-size="9">Check: DB, cache, dependencies</text>
+<text x="680" y="268" text-anchor="middle" fill="#3fb950" font-size="9">Container NOT restarted on fail</text>
+<text x="680" y="284" text-anchor="middle" fill="#8b949e" font-size="9">successThreshold can be > 1</text>
+
+<!-- Mechanisms row -->
+<rect x="20" y="315" width="780" height="130" rx="8" fill="#161b22" stroke="#30363d"/>
+<text x="410" y="338" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="bold">Probe Mechanisms (all three probe types support all four)</text>
+
+<rect x="35" y="350" width="170" height="80" rx="6" fill="#1f3a5f" stroke="#58a6ff" stroke-width="1"/>
+<text x="120" y="372" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="bold">HTTP GET</text>
+<text x="120" y="390" text-anchor="middle" fill="#8b949e" font-size="10">2xx/3xx = success</text>
+<text x="120" y="406" text-anchor="middle" fill="#8b949e" font-size="10">/healthz, /ready</text>
+<text x="120" y="422" text-anchor="middle" fill="#3fb950" font-size="9">Most common</text>
+
+<rect x="220" y="350" width="170" height="80" rx="6" fill="#1f3a5f" stroke="#58a6ff" stroke-width="1"/>
+<text x="305" y="372" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="bold">TCP Socket</text>
+<text x="305" y="390" text-anchor="middle" fill="#8b949e" font-size="10">connection open = success</text>
+<text x="305" y="406" text-anchor="middle" fill="#8b949e" font-size="10">DB, queues, sockets</text>
+<text x="305" y="422" text-anchor="middle" fill="#3fb950" font-size="9">No HTTP needed</text>
+
+<rect x="405" y="350" width="170" height="80" rx="6" fill="#1f3a5f" stroke="#58a6ff" stroke-width="1"/>
+<text x="490" y="372" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="bold">Exec (Command)</text>
+<text x="490" y="390" text-anchor="middle" fill="#8b949e" font-size="10">exit code 0 = success</text>
+<text x="490" y="406" text-anchor="middle" fill="#8b949e" font-size="10">redis-cli ping, pg_isready</text>
+<text x="490" y="422" text-anchor="middle" fill="#3fb950" font-size="9">Most flexible</text>
+
+<rect x="590" y="350" width="195" height="80" rx="6" fill="#1f3a5f" stroke="#58a6ff" stroke-width="1"/>
+<text x="687" y="372" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="bold">gRPC (1.24+)</text>
+<text x="687" y="390" text-anchor="middle" fill="#8b949e" font-size="10">gRPC health protocol</text>
+<text x="687" y="406" text-anchor="middle" fill="#8b949e" font-size="10">gRPC services</text>
+<text x="687" y="422" text-anchor="middle" fill="#3fb950" font-size="9">Native gRPC health</text>
+</svg>
